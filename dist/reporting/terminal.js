@@ -1,0 +1,116 @@
+import chalk from "chalk";
+import boxen from "boxen";
+import figlet from "figlet";
+import gradient from "gradient-string";
+const divider = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+export function brandBanner() {
+    const title = figlet.textSync("GTF", { horizontalLayout: "default" });
+    return boxen(`${gradient(["#00D1FF", "#7C3AED", "#F97316"])(title)}\nGTF INSPECTOR\nFrontend Quality Platform`, {
+        padding: 1,
+        borderStyle: "double",
+        borderColor: "cyan",
+        align: "center",
+    });
+}
+export function renderTerminalReport(report) {
+    const sections = report.engines.map(renderEngine).join("\n\n");
+    const priorities = report.topPriorities.map((priority, index) => `${index + 1}. ${priority}`).join("\n");
+    return `${divider}
+
+GTF INSPECTOR REPORT
+
+Project:
+${report.project.name}
+
+Framework:
+${report.project.framework}
+
+Components:
+${report.project.components}
+
+Pages:
+${report.project.pages}
+
+Routes:
+${report.project.routes}
+
+${divider}
+
+OVERALL SCORE
+
+${scoreColor(report.overallScore)(`${report.overallScore} / 100`)}
+
+${divider}
+
+${sections}
+
+${divider}
+
+ESTIMATED IMPACT
+
+Potential Lighthouse Gain:
++${report.impact.lighthouseGain}
+
+Potential Accessibility Gain:
++${report.impact.accessibilityGain}
+
+Potential Bundle Reduction:
+-${report.impact.bundleReductionKb}KB
+
+Estimated Developer Fix Time:
+${report.impact.developerFixMinutes} Minutes
+
+Developer Review Time Saved:
+${report.impact.reviewTimeSavedMinutes} Minutes
+
+${divider}
+
+COPYABLE SUMMARY
+
+Project Score: ${report.overallScore}
+
+Critical Issues: ${report.criticalIssues}
+Warnings: ${report.warnings}
+
+Top Priorities:
+
+${priorities || "No priority issues detected."}
+
+${divider}`;
+}
+function renderEngine(engine) {
+    const findings = engine.findings.length > 0 ? engine.findings.map(renderFinding).join("\n\n") : "No issues detected.";
+    return `${engine.name.toUpperCase()}
+
+Score: ${scoreColor(engine.score)(String(engine.score))}
+
+Issues:
+
+${findings}`;
+}
+function renderFinding(finding) {
+    const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
+    return `• [${severityColor(finding.severity)(finding.severity)}] ${finding.title}
+  Issue: ${finding.issue}
+  Impact: ${finding.impact}
+  File: ${location}
+  Recommendation: ${finding.recommendation}
+  Priority: ${finding.severity}`;
+}
+function scoreColor(score) {
+    if (score >= 90)
+        return chalk.green.bold;
+    if (score >= 75)
+        return chalk.yellow.bold;
+    return chalk.red.bold;
+}
+function severityColor(severity) {
+    if (severity === "Critical")
+        return chalk.red.bold;
+    if (severity === "High")
+        return chalk.magenta.bold;
+    if (severity === "Medium")
+        return chalk.yellow.bold;
+    return chalk.gray.bold;
+}
+//# sourceMappingURL=terminal.js.map

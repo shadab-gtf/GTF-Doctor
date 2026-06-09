@@ -1,0 +1,226 @@
+{
+  "generatedAt": "2026-06-09T13:14:17.434Z",
+  "project": {
+    "name": "bad-project-demo",
+    "framework": "Next.js 15.0.0",
+    "components": 2,
+    "pages": 2,
+    "routes": 1
+  },
+  "overallScore": 70,
+  "engines": [
+    {
+      "name": "SEO",
+      "score": 82,
+      "findings": [
+        {
+          "id": "seo-missing-metadata",
+          "title": "Missing Metadata",
+          "issue": "No Next.js metadata export was found in the app router.",
+          "impact": "Search previews, titles, descriptions, and social cards can be incomplete or inconsistent.",
+          "recommendation": "Add centralized metadata in app/layout.tsx and route-specific metadata where needed.",
+          "severity": "Critical"
+        }
+      ],
+      "recommendations": [
+        "Centralize shared metadata defaults",
+        "Add OG images for high-value routes"
+      ]
+    },
+    {
+      "name": "Metadata",
+      "score": 90,
+      "findings": [
+        {
+          "id": "metadata-route-missing",
+          "title": "Route metadata not detected",
+          "issue": "This page does not export metadata or generateMetadata.",
+          "impact": "Route-level search and social previews may rely on generic defaults.",
+          "recommendation": "Add route metadata or confirm the inherited layout metadata is sufficient.",
+          "severity": "High",
+          "location": {
+            "file": "app/page.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Keep defaults in root layout",
+        "Use route overrides for important pages"
+      ]
+    },
+    {
+      "name": "Accessibility",
+      "score": 80,
+      "findings": [
+        {
+          "id": "a11y-missing-alt",
+          "title": "Missing image alt text",
+          "issue": "An img element does not include an alt attribute.",
+          "impact": "Screen reader users cannot understand the purpose of the image.",
+          "recommendation": "Add meaningful alt text or alt=\"\" for decorative images.",
+          "severity": "Medium",
+          "location": {
+            "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "a11y-input-label",
+          "title": "Input missing accessible label",
+          "issue": "An input lacks an id, aria-label, or aria-labelledby attribute.",
+          "impact": "Assistive technology may announce the control without useful context.",
+          "recommendation": "Connect the input to a visible label or add an ARIA label.",
+          "severity": "Medium",
+          "location": {
+            "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "a11y-empty-button",
+          "title": "Empty button",
+          "issue": "A button renders without readable text or accessible naming.",
+          "impact": "Keyboard and screen reader users cannot identify the action.",
+          "recommendation": "Add visible text, aria-label, or an accessible icon label.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Prefer semantic controls",
+        "Run browser axe checks before release"
+      ]
+    },
+    {
+      "name": "Performance",
+      "score": 80,
+      "findings": [
+        {
+          "id": "perf-raw-img",
+          "title": "Raw img element in Next.js UI",
+          "issue": "The component uses img instead of next/image.",
+          "impact": "Image optimization, responsive sizing, and CLS prevention can be missed.",
+          "recommendation": "Use next/image with explicit width, height, and sizes.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "perf-unneeded-client",
+          "title": "Client component may be unnecessary",
+          "issue": "The file is marked use client but no interaction, browser API, or animation usage was detected.",
+          "impact": "Unneeded client rendering increases JavaScript shipped to users.",
+          "recommendation": "Convert this file to a Server Component if no client-only behavior exists.",
+          "severity": "High",
+          "location": {
+            "file": "app/page.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Prefer Server Components",
+        "Dynamically import heavy client widgets"
+      ]
+    },
+    {
+      "name": "Skeleton Coverage",
+      "score": 0,
+      "findings": [
+        {
+          "id": "skeleton-missing",
+          "title": "Missing skeleton for AnimatedHero",
+          "issue": "AnimatedHero does not have a matching AnimatedHeroSkeleton component.",
+          "impact": "Async rendering can show blank or shifting UI during loading states.",
+          "recommendation": "Create AnimatedHeroSkeleton with layout-matched placeholders.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/AnimatedHero.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "skeleton-missing",
+          "title": "Missing skeleton for ProductCard",
+          "issue": "ProductCard does not have a matching ProductCardSkeleton component.",
+          "impact": "Async rendering can show blank or shifting UI during loading states.",
+          "recommendation": "Create ProductCardSkeleton with layout-matched placeholders.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Add skeletons for async sections and repeated cards",
+        "Match dimensions to prevent CLS"
+      ]
+    },
+    {
+      "name": "Next.js",
+      "score": 82,
+      "findings": [
+        {
+          "id": "nextjs-client-page",
+          "title": "Client directive in page",
+          "issue": "A Next.js page is marked with use client.",
+          "impact": "The route loses server-first rendering benefits and can increase bundle size.",
+          "recommendation": "Move interactive UI into a child client component and keep the page server-only.",
+          "severity": "Critical",
+          "location": {
+            "file": "app/page.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Keep app pages server-only",
+        "Stream async sections with Suspense"
+      ]
+    },
+    {
+      "name": "GSAP",
+      "score": 90,
+      "findings": [
+        {
+          "id": "gsap-missing-cleanup",
+          "title": "Missing GSAP cleanup",
+          "issue": "GSAP animation code does not appear to call ctx.revert() or use gsap.context().",
+          "impact": "Animations and ScrollTriggers can leak across route transitions.",
+          "recommendation": "Wrap animations in gsap.context() and return ctx.revert() from the effect.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/AnimatedHero.tsx",
+            "line": 4
+          }
+        }
+      ],
+      "recommendations": [
+        "Keep GSAP isolated to client components",
+        "Use gsap.context for route-safe cleanup"
+      ]
+    }
+  ],
+  "criticalIssues": 2,
+  "warnings": 9,
+  "topPriorities": [
+    "Add centralized metadata in app/layout.tsx and route-specific metadata where needed.",
+    "Move interactive UI into a child client component and keep the page server-only.",
+    "Add route metadata or confirm the inherited layout metadata is sufficient.",
+    "Add visible text, aria-label, or an accessible icon label."
+  ],
+  "impact": {
+    "lighthouseGain": 23,
+    "accessibilityGain": 9,
+    "bundleReductionKb": 345,
+    "developerFixMinutes": 139,
+    "reviewTimeSavedMinutes": 89
+  }
+}

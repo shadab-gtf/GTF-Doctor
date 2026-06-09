@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GTF Inspector Report</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --green:#16a34a; --red:#dc2626; --amber:#d97706; }
+    [data-theme="dark"] { --bg:#020617; --surface:#0f172a; --ink:#e5e7eb; --muted:#94a3b8; --line:#1e293b; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
+    header { padding: 40px; color: white; background: linear-gradient(135deg, #0f172a, #1d4ed8 45%, #7c3aed); }
+    header nav { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    button, input { border:0; border-radius:8px; padding:10px 14px; background:white; color:#1d4ed8; font-weight:700; }
+    input { min-width:240px; color:#0f172a; font-weight:500; }
+    h1 { margin: 36px 0 8px; font-size: clamp(36px, 6vw, 72px); line-height: 1; letter-spacing: 0; }
+    .subtitle { color:#dbeafe; font-size:18px; }
+    main { max-width: 1180px; margin: -42px auto 64px; padding: 0 24px; }
+    .grid { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:16px; margin-bottom:16px; }
+    .metric, .card { background:var(--surface); border:1px solid var(--line); border-radius:8px; box-shadow:0 12px 35px rgba(15,23,42,.08); }
+    .metric { padding:20px; }
+    .metric span { display:block; color:var(--muted); font-size:13px; }
+    .metric strong { display:block; margin-top:8px; font-size:32px; }
+    .card { padding:22px; margin-top:16px; }
+    .cardHeader { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .cardHeader h2 { margin:0; font-size:22px; }
+    .cardHeader strong { font-size:30px; color:var(--blue); }
+    .progress { height:10px; background:#e2e8f0; border-radius:999px; overflow:hidden; margin:14px 0 18px; }
+    .progress span { display:block; height:100%; background:linear-gradient(90deg, var(--blue), var(--violet)); }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { padding:12px; border-top:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    small { display:block; color:var(--muted); margin-top:4px; line-height:1.45; }
+    .pill { display:inline-flex; border-radius:999px; padding:4px 9px; font-size:12px; font-weight:800; color:white; }
+    .critical { background:var(--red); } .high { background:#9333ea; } .medium { background:var(--amber); } .low { background:var(--muted); }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } table { display:block; overflow-x:auto; } }
+    @media (max-width: 560px) { header { padding:24px; } main { padding:0 14px; } .grid { grid-template-columns:1fr; } }
+    @media print { header { background:#fff; color:#111827; } button, input { display:none; } main { margin:0; } .card, .metric { box-shadow:none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <b>GTF Inspector</b>
+      <div class="actions">
+        <input id="search" placeholder="Search issues" oninput="filterRows(this.value)" />
+        <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? '' : 'dark'">Theme</button>
+        <button onclick="window.print()">Print</button>
+        <button onclick="navigator.clipboard.writeText(document.documentElement.outerHTML)">Export</button>
+      </div>
+    </nav>
+    <h1>Project Health 70/100</h1>
+    <p class="subtitle">bad-project-demo · Next.js 15.0.0 · Generated 2026-06-09T13:14:16.437Z</p>
+  </header>
+  <main>
+    <section class="grid">
+      <div class="metric"><span>Components</span><strong>2</strong></div>
+      <div class="metric"><span>Routes</span><strong>1</strong></div>
+      <div class="metric"><span>Critical Issues</span><strong>2</strong></div>
+      <div class="metric"><span>Time Saved</span><strong>89m</strong></div>
+    </section>
+    <section class="card">
+  <div class="cardHeader">
+    <h2>SEO</h2>
+    <strong>82</strong>
+  </div>
+  <div class="progress"><span style="width:82%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill critical">Critical</span></td>
+              <td><b>Missing Metadata</b><small>Search previews, titles, descriptions, and social cards can be incomplete or inconsistent.</small></td>
+              <td>Project level</td>
+              <td>Add centralized metadata in app/layout.tsx and route-specific metadata where needed.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Metadata</h2>
+    <strong>90</strong>
+  </div>
+  <div class="progress"><span style="width:90%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Route metadata not detected</b><small>Route-level search and social previews may rely on generic defaults.</small></td>
+              <td>app/page.tsx:1</td>
+              <td>Add route metadata or confirm the inherited layout metadata is sufficient.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Accessibility</h2>
+    <strong>80</strong>
+  </div>
+  <div class="progress"><span style="width:80%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill medium">Medium</span></td>
+              <td><b>Missing image alt text</b><small>Screen reader users cannot understand the purpose of the image.</small></td>
+              <td>app/components/ProductCard.tsx:1</td>
+              <td>Add meaningful alt text or alt=&quot;&quot; for decorative images.</td>
+            </tr><tr>
+              <td><span class="pill medium">Medium</span></td>
+              <td><b>Input missing accessible label</b><small>Assistive technology may announce the control without useful context.</small></td>
+              <td>app/components/ProductCard.tsx:1</td>
+              <td>Connect the input to a visible label or add an ARIA label.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Empty button</b><small>Keyboard and screen reader users cannot identify the action.</small></td>
+              <td>app/components/ProductCard.tsx:1</td>
+              <td>Add visible text, aria-label, or an accessible icon label.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Performance</h2>
+    <strong>80</strong>
+  </div>
+  <div class="progress"><span style="width:80%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Raw img element in Next.js UI</b><small>Image optimization, responsive sizing, and CLS prevention can be missed.</small></td>
+              <td>app/components/ProductCard.tsx:1</td>
+              <td>Use next/image with explicit width, height, and sizes.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Client component may be unnecessary</b><small>Unneeded client rendering increases JavaScript shipped to users.</small></td>
+              <td>app/page.tsx:1</td>
+              <td>Convert this file to a Server Component if no client-only behavior exists.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Skeleton Coverage</h2>
+    <strong>0</strong>
+  </div>
+  <div class="progress"><span style="width:0%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Missing skeleton for AnimatedHero</b><small>Async rendering can show blank or shifting UI during loading states.</small></td>
+              <td>app/components/AnimatedHero.tsx:1</td>
+              <td>Create AnimatedHeroSkeleton with layout-matched placeholders.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Missing skeleton for ProductCard</b><small>Async rendering can show blank or shifting UI during loading states.</small></td>
+              <td>app/components/ProductCard.tsx:1</td>
+              <td>Create ProductCardSkeleton with layout-matched placeholders.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Next.js</h2>
+    <strong>82</strong>
+  </div>
+  <div class="progress"><span style="width:82%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill critical">Critical</span></td>
+              <td><b>Client directive in page</b><small>The route loses server-first rendering benefits and can increase bundle size.</small></td>
+              <td>app/page.tsx:1</td>
+              <td>Move interactive UI into a child client component and keep the page server-only.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>GSAP</h2>
+    <strong>90</strong>
+  </div>
+  <div class="progress"><span style="width:90%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Missing GSAP cleanup</b><small>Animations and ScrollTriggers can leak across route transitions.</small></td>
+              <td>app/components/AnimatedHero.tsx:4</td>
+              <td>Wrap animations in gsap.context() and return ctx.revert() from the effect.</td>
+            </tr>
+    </tbody>
+  </table>
+</section>
+  </main>
+  <script>
+    function filterRows(value) {
+      const needle = value.toLowerCase();
+      document.querySelectorAll("tbody tr").forEach((row) => {
+        row.style.display = row.textContent.toLowerCase().includes(needle) ? "" : "none";
+      });
+    }
+  </script>
+</body>
+</html>

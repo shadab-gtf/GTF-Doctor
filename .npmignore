@@ -1,0 +1,12 @@
+examples/
+scripts/
+tests/
+src/
+reports/
+node_modules/
+.gtf/
+gtf.config.ts
+*.tgz
+tsconfig.json
+.eslintrc.cjs
+.prettierrc

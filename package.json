@@ -1,0 +1,80 @@
+{
+  "name": "gtf-inspector",
+  "version": "1.0.0",
+  "description": "Local-first frontend quality auditing, reporting, and skeleton generation CLI.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "cli",
+    "audit",
+    "accessibility",
+    "seo",
+    "performance",
+    "skeleton",
+    "gsap"
+  ],
+  "author": "GTF Technologies",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gtftechnologies/gtf-inspector.git"
+  },
+  "homepage": "https://www.gtftechnologies.com",
+  "bugs": {
+    "url": "https://github.com/gtftechnologies/gtf-inspector/issues"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "bin": {
+    "gtf": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli/index.ts",
+    "self-test": "tsx scripts/self-test.ts",
+    "readme:generate": "tsx scripts/generate-readme.ts",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "cli-progress": "^3.12.0",
+    "clipboardy": "^4.0.0",
+    "commander": "^14.0.2",
+    "ejs": "^3.1.10",
+    "figlet": "^1.9.4",
+    "gradient-string": "^3.0.0",
+    "nanospinner": "^1.2.2",
+    "ora": "^9.0.0",
+    "simple-git": "^3.29.0",
+    "ts-morph": "^27.0.2"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.28.0",
+    "@types/ejs": "^3.1.5",
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "sharp": "^0.34.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
