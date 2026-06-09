@@ -1,6 +1,17 @@
 export function renderHtmlReport(report) {
-    const engineCards = report.engines
-        .map((engine) => `<section class="card">
+    const engineCards = [];
+    for (const engine of report.engines) {
+        const rows = [];
+        for (const finding of engine.findings) {
+            const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
+            rows.push(`<tr>
+              <td><span class="pill ${finding.severity.toLowerCase()}">${finding.severity}</span></td>
+              <td><b>${escapeHtml(finding.title)}</b><small>${escapeHtml(finding.impact)}</small></td>
+              <td>${escapeHtml(location)}</td>
+              <td>${escapeHtml(finding.recommendation)}</td>
+            </tr>`);
+        }
+        engineCards.push(`<section class="card">
   <div class="cardHeader">
     <h2>${escapeHtml(engine.name)}</h2>
     <strong>${engine.score}</strong>
@@ -9,21 +20,11 @@ export function renderHtmlReport(report) {
   <table>
     <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
     <tbody>
-      ${engine.findings
-        .map((finding) => {
-        const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
-        return `<tr>
-              <td><span class="pill ${finding.severity.toLowerCase()}">${finding.severity}</span></td>
-              <td><b>${escapeHtml(finding.title)}</b><small>${escapeHtml(finding.impact)}</small></td>
-              <td>${escapeHtml(location)}</td>
-              <td>${escapeHtml(finding.recommendation)}</td>
-            </tr>`;
-    })
-        .join("") || `<tr><td colspan="4">No issues detected.</td></tr>`}
+      ${rows.join("") || `<tr><td colspan="4">No issues detected.</td></tr>`}
     </tbody>
   </table>
-</section>`)
-        .join("");
+</section>`);
+    }
     return `<!doctype html>
 <html lang="en">
 <head>
@@ -31,7 +32,7 @@ export function renderHtmlReport(report) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GTF Inspector Report</title>
   <style>
-    :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --green:#16a34a; --red:#dc2626; --amber:#d97706; }
+    :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --red:#dc2626; --amber:#d97706; }
     [data-theme="dark"] { --bg:#020617; --surface:#0f172a; --ink:#e5e7eb; --muted:#94a3b8; --line:#1e293b; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
@@ -77,7 +78,7 @@ export function renderHtmlReport(report) {
       </div>
     </nav>
     <h1>Project Health ${report.overallScore}/100</h1>
-    <p class="subtitle">${escapeHtml(report.project.name)} · ${escapeHtml(report.project.framework)} · Generated ${escapeHtml(report.generatedAt)}</p>
+    <p class="subtitle">${escapeHtml(report.project.name)} | ${escapeHtml(report.project.framework)} | Generated ${escapeHtml(report.generatedAt)}</p>
   </header>
   <main>
     <section class="grid">
@@ -86,7 +87,7 @@ export function renderHtmlReport(report) {
       <div class="metric"><span>Critical Issues</span><strong>${report.criticalIssues}</strong></div>
       <div class="metric"><span>Time Saved</span><strong>${report.impact.reviewTimeSavedMinutes}m</strong></div>
     </section>
-    ${engineCards}
+    ${engineCards.join("")}
   </main>
   <script>
     function filterRows(value) {

@@ -3,7 +3,7 @@ import path from "node:path";
 import { PackageJson, ProjectFile } from "../types/report.js";
 
 const SOURCE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
-const DEFAULT_EXCLUDES = new Set(["node_modules", ".next", "dist", "build", "coverage", ".git"]);
+const DEFAULT_EXCLUDES = new Set(["node_modules", ".next", "dist", "build", "coverage", ".git", "reports", "examples", "scripts", ".tmp"]);
 
 export async function pathExists(target: string): Promise<boolean> {
   try {

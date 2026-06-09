@@ -1,6 +1,16 @@
 import { SCORE_WEIGHTS } from "./constants.js";
 import { AuditReport, EngineReport, Finding, ImpactEstimate, ProjectSummary } from "../types/report.js";
 
+interface FindingStats {
+  critical: number;
+  high: number;
+  medium: number;
+  warnings: number;
+  accessibility: number;
+}
+
+const SEVERITY_RANK: Record<Finding["severity"], number> = { Critical: 0, High: 1, Medium: 2, Low: 3 };
+
 export function scoreFromFindings(findings: Finding[], base = 100): number {
   const penalty = findings.reduce((total, finding) => {
     if (finding.severity === "Critical") return total + 18;
@@ -13,23 +23,43 @@ export function scoreFromFindings(findings: Finding[], base = 100): number {
 
 export function weightedOverall(engines: EngineReport[]): number {
   const byName = new Map(engines.map((engine) => [engine.name, engine.score]));
-  const total =
-    (byName.get("SEO") ?? 100) * SCORE_WEIGHTS.seo +
-    (byName.get("Accessibility") ?? 100) * SCORE_WEIGHTS.accessibility +
-    (byName.get("Performance") ?? 100) * SCORE_WEIGHTS.performance +
-    (byName.get("Skeleton Coverage") ?? 100) * SCORE_WEIGHTS.skeleton +
-    (byName.get("Next.js") ?? 100) * SCORE_WEIGHTS.nextjs +
-    (byName.get("GSAP") ?? 100) * SCORE_WEIGHTS.gsap;
-  return Math.round(total);
+  const weightedScores = [
+    [(byName.get("SEO") ?? 100), SCORE_WEIGHTS.seo],
+    [(byName.get("Accessibility") ?? 100), SCORE_WEIGHTS.accessibility],
+    [(byName.get("Performance") ?? 100), SCORE_WEIGHTS.performance],
+    [(byName.get("Skeleton Coverage") ?? 100), SCORE_WEIGHTS.skeleton],
+    [(byName.get("Next.js") ?? 100), SCORE_WEIGHTS.nextjs],
+    [(byName.get("GSAP") ?? 100), SCORE_WEIGHTS.gsap],
+    [(byName.get("Memory Health") ?? 100), SCORE_WEIGHTS.memory],
+    [(byName.get("React Diagnostics") ?? 100), SCORE_WEIGHTS.react],
+    [(byName.get("Runtime Insights") ?? 100), SCORE_WEIGHTS.runtime],
+    [(byName.get("Component Health") ?? 100), SCORE_WEIGHTS.component],
+    [(byName.get("Page Health") ?? 100), SCORE_WEIGHTS.page],
+    [(byName.get("Engineering Score") ?? 100), SCORE_WEIGHTS.engineering],
+  ] as const;
+  const totalWeight = weightedScores.reduce((total, item) => total + item[1], 0);
+  const total = weightedScores.reduce((sum, item) => sum + item[0] * item[1], 0);
+  return Math.round(total / totalWeight);
 }
 
 export function buildAuditReport(project: ProjectSummary, engines: EngineReport[]): AuditReport {
-  const findings = engines.flatMap((engine) => engine.findings);
-  const criticalIssues = findings.filter((finding) => finding.severity === "Critical").length;
-  const warnings = findings.filter((finding) => finding.severity !== "Critical").length;
+  const findings: Finding[] = [];
+  const stats: FindingStats = { critical: 0, high: 0, medium: 0, warnings: 0, accessibility: 0 };
+
+  for (const engine of engines) {
+    for (const finding of engine.findings) {
+      findings.push(finding);
+      if (finding.severity === "Critical") stats.critical += 1;
+      else stats.warnings += 1;
+      if (finding.severity === "High") stats.high += 1;
+      if (finding.severity === "Medium") stats.medium += 1;
+      if (finding.id.startsWith("a11y")) stats.accessibility += 1;
+    }
+  }
+
   const priorities = findings
     .slice()
-    .sort((left, right) => severityRank(left.severity) - severityRank(right.severity))
+    .sort((left, right) => SEVERITY_RANK[left.severity] - SEVERITY_RANK[right.severity])
     .slice(0, 4)
     .map((finding) => finding.recommendation);
 
@@ -38,26 +68,19 @@ export function buildAuditReport(project: ProjectSummary, engines: EngineReport[
     project,
     overallScore: weightedOverall(engines),
     engines,
-    criticalIssues,
-    warnings,
+    criticalIssues: stats.critical,
+    warnings: stats.warnings,
     topPriorities: priorities,
-    impact: estimateImpact(findings),
+    impact: estimateImpact(findings.length, stats),
   };
 }
 
-function severityRank(severity: Finding["severity"]): number {
-  return { Critical: 0, High: 1, Medium: 2, Low: 3 }[severity];
-}
-
-function estimateImpact(findings: Finding[]): ImpactEstimate {
-  const critical = findings.filter((finding) => finding.severity === "Critical").length;
-  const high = findings.filter((finding) => finding.severity === "High").length;
-  const medium = findings.filter((finding) => finding.severity === "Medium").length;
+function estimateImpact(findingCount: number, stats: FindingStats): ImpactEstimate {
   return {
-    lighthouseGain: Math.min(30, high * 3 + medium),
-    accessibilityGain: Math.min(25, findings.filter((finding) => finding.id.startsWith("a11y")).length * 3),
-    bundleReductionKb: Math.min(900, high * 45 + medium * 15),
-    developerFixMinutes: critical * 20 + high * 12 + medium * 6 + 3,
-    reviewTimeSavedMinutes: findings.length * 7 + 12,
+    lighthouseGain: Math.min(30, stats.high * 3 + stats.medium),
+    accessibilityGain: Math.min(25, stats.accessibility * 3),
+    bundleReductionKb: Math.min(900, stats.high * 45 + stats.medium * 15),
+    developerFixMinutes: stats.critical * 20 + stats.high * 12 + stats.medium * 6 + 3,
+    reviewTimeSavedMinutes: findingCount * 7 + 12,
   };
 }

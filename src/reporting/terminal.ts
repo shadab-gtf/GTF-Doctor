@@ -1,20 +1,35 @@
 import chalk from "chalk";
 import type { ChalkInstance } from "chalk";
-import boxen from "boxen";
-import figlet from "figlet";
 import gradient from "gradient-string";
 import { AuditReport, EngineReport, Finding } from "../types/report.js";
 
-const divider = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+const divider = "------------------------------------------------------------";
 
 export function brandBanner(): string {
-  const title = figlet.textSync("GTF", { horizontalLayout: "default" });
-  return boxen(`${gradient(["#00D1FF", "#7C3AED", "#F97316"])(title)}\nGTF INSPECTOR\nFrontend Quality Platform`, {
-    padding: 1,
-    borderStyle: "double",
-    borderColor: "cyan",
-    align: "center",
-  });
+  const width = 54;
+  const wordmarkLines = [
+    "  GGGGGGGGG      TTTTTTTTTTT     FFFFFFFFFFF  ",
+    " GGG             TTTTTTTTTTT     FFFFFFFFFFF  ",
+    " GGG                 TTT         FFF          ",
+    " GGG   GGGG          TTT         FFFFFFFF     ",
+    " GGG     GG          TTT         FFFFFFFF     ",
+    " GGG     GG          TTT         FFF          ",
+    "  GGGGGGGG           TTT         FFF          ",
+  ];
+  const line = chalk.cyan(`+${"-".repeat(width)}+`);
+  const empty = `${chalk.cyan("|")}${" ".repeat(width)}${chalk.cyan("|")}`;
+  return [
+    line,
+    empty,
+    wordmarkLines
+      .map((wordmarkLine) => `${chalk.cyan("|")} ${gradient(["#00D1FF", "#7C3AED", "#F97316"])(wordmarkLine.padEnd(width))}${chalk.cyan("|")}`)
+      .join("\n"),
+    empty,
+    `${chalk.cyan("|")} ${chalk.bold.white("GTF INSPECTOR").padEnd(width - 1)}${chalk.cyan("|")}`,
+    `${chalk.cyan("|")} ${chalk.gray("Frontend Quality Platform").padEnd(width - 1)}${chalk.cyan("|")}`,
+    empty,
+    line,
+  ].join("\n");
 }
 
 export function renderTerminalReport(report: AuditReport): string {
@@ -97,7 +112,7 @@ ${findings}`;
 
 function renderFinding(finding: Finding): string {
   const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
-  return `• [${severityColor(finding.severity)(finding.severity)}] ${finding.title}
+  return `- [${severityColor(finding.severity)(finding.severity)}] ${finding.title}
   Issue: ${finding.issue}
   Impact: ${finding.impact}
   File: ${location}

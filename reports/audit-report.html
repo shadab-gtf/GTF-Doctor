@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GTF Inspector Report</title>
   <style>
-    :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --green:#16a34a; --red:#dc2626; --amber:#d97706; }
+    :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --red:#dc2626; --amber:#d97706; }
     [data-theme="dark"] { --bg:#020617; --surface:#0f172a; --ink:#e5e7eb; --muted:#94a3b8; --line:#1e293b; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
@@ -50,15 +50,15 @@
         <button onclick="navigator.clipboard.writeText(document.documentElement.outerHTML)">Export</button>
       </div>
     </nav>
-    <h1>Project Health 70/100</h1>
-    <p class="subtitle">bad-project-demo · Next.js 15.0.0 · Generated 2026-06-09T13:14:16.437Z</p>
+    <h1>Project Health 75/100</h1>
+    <p class="subtitle">bad-project-demo | Next.js 15.0.0 | Generated 2026-06-09T13:54:22.410Z</p>
   </header>
   <main>
     <section class="grid">
-      <div class="metric"><span>Components</span><strong>2</strong></div>
+      <div class="metric"><span>Components</span><strong>4</strong></div>
       <div class="metric"><span>Routes</span><strong>1</strong></div>
-      <div class="metric"><span>Critical Issues</span><strong>2</strong></div>
-      <div class="metric"><span>Time Saved</span><strong>89m</strong></div>
+      <div class="metric"><span>Critical Issues</span><strong>3</strong></div>
+      <div class="metric"><span>Time Saved</span><strong>173m</strong></div>
     </section>
     <section class="card">
   <div class="cardHeader">
@@ -124,9 +124,9 @@
 </section><section class="card">
   <div class="cardHeader">
     <h2>Performance</h2>
-    <strong>80</strong>
+    <strong>70</strong>
   </div>
-  <div class="progress"><span style="width:80%"></span></div>
+  <div class="progress"><span style="width:70%"></span></div>
   <table>
     <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
     <tbody>
@@ -138,8 +138,108 @@
             </tr><tr>
               <td><span class="pill high">High</span></td>
               <td><b>Client component may be unnecessary</b><small>Unneeded client rendering increases JavaScript shipped to users.</small></td>
+              <td>app/components/RuntimePanel.tsx:1</td>
+              <td>Convert this file to a Server Component if no client-only behavior exists.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Client component may be unnecessary</b><small>Unneeded client rendering increases JavaScript shipped to users.</small></td>
               <td>app/page.tsx:1</td>
               <td>Convert this file to a Server Component if no client-only behavior exists.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Memory Health</h2>
+    <strong>80</strong>
+  </div>
+  <div class="progress"><span style="width:80%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Event listener cleanup missing</b><small>Listeners can stay alive after unmount and cause memory leaks or duplicate behavior.</small></td>
+              <td>app/components/MemoryPanel.tsx:3</td>
+              <td>Return a cleanup function that removes every listener registered by the effect.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Interval cleanup missing</b><small>Intervals can continue running after a component is gone, wasting CPU and memory.</small></td>
+              <td>app/components/MemoryPanel.tsx:3</td>
+              <td>Store the interval id and call clearInterval from effect cleanup.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>React Diagnostics</h2>
+    <strong>90</strong>
+  </div>
+  <div class="progress"><span style="width:90%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>List item key not detected</b><small>React reconciliation can become unstable and cause incorrect UI updates.</small></td>
+              <td>app/components/ProductCard.tsx:1</td>
+              <td>Add a stable key from data identity, not the array index when avoidable.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Runtime Insights</h2>
+    <strong>90</strong>
+  </div>
+  <div class="progress"><span style="width:90%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill medium">Medium</span></td>
+              <td><b>Unguarded JSON.parse</b><small>Invalid persisted or API data can crash the rendering path.</small></td>
+              <td>app/components/RuntimePanel.tsx:2</td>
+              <td>Wrap parsing in a safe parser and return a typed fallback.</td>
+            </tr><tr>
+              <td><span class="pill medium">Medium</span></td>
+              <td><b>Fetch error handling not detected</b><small>Network failures can become uncaught runtime errors or blank UI states.</small></td>
+              <td>app/components/RuntimePanel.tsx:2</td>
+              <td>Handle failed responses and network errors with typed fallbacks.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Component Health</h2>
+    <strong>90</strong>
+  </div>
+  <div class="progress"><span style="width:90%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Data fetching inside component</b><small>This creates duplicate fetching and weakens page-to-section-to-UI data flow.</small></td>
+              <td>app/components/RuntimePanel.tsx:2</td>
+              <td>Move data loading into the page or lib/api and pass typed props down.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Page Health</h2>
+    <strong>82</strong>
+  </div>
+  <div class="progress"><span style="width:82%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill critical">Critical</span></td>
+              <td><b>Page is a client component</b><small>This weakens server-first rendering and can increase JavaScript shipped to users.</small></td>
+              <td>app/page.tsx:1</td>
+              <td>Keep pages server-only and move interaction into child client components.</td>
             </tr>
     </tbody>
   </table>
@@ -159,9 +259,19 @@
               <td>Create AnimatedHeroSkeleton with layout-matched placeholders.</td>
             </tr><tr>
               <td><span class="pill high">High</span></td>
+              <td><b>Missing skeleton for MemoryPanel</b><small>Async rendering can show blank or shifting UI during loading states.</small></td>
+              <td>app/components/MemoryPanel.tsx:1</td>
+              <td>Create MemoryPanelSkeleton with layout-matched placeholders.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
               <td><b>Missing skeleton for ProductCard</b><small>Async rendering can show blank or shifting UI during loading states.</small></td>
               <td>app/components/ProductCard.tsx:1</td>
               <td>Create ProductCardSkeleton with layout-matched placeholders.</td>
+            </tr><tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Missing skeleton for RuntimePanel</b><small>Async rendering can show blank or shifting UI during loading states.</small></td>
+              <td>app/components/RuntimePanel.tsx:1</td>
+              <td>Create RuntimePanelSkeleton with layout-matched placeholders.</td>
             </tr>
     </tbody>
   </table>
@@ -196,6 +306,28 @@
               <td><b>Missing GSAP cleanup</b><small>Animations and ScrollTriggers can leak across route transitions.</small></td>
               <td>app/components/AnimatedHero.tsx:4</td>
               <td>Wrap animations in gsap.context() and return ctx.revert() from the effect.</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Engineering Score</h2>
+    <strong>85</strong>
+  </div>
+  <div class="progress"><span style="width:85%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill high">High</span></td>
+              <td><b>Build script missing</b><small>The project is harder to validate consistently before release.</small></td>
+              <td>Project level</td>
+              <td>Add a deterministic build script and run it in CI.</td>
+            </tr><tr>
+              <td><span class="pill medium">Medium</span></td>
+              <td><b>Test script missing</b><small>Regression confidence is lower and adoption is harder to trust.</small></td>
+              <td>Project level</td>
+              <td>Add unit or integration tests for critical frontend behavior.</td>
             </tr>
     </tbody>
   </table>

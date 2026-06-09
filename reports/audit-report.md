@@ -1,18 +1,18 @@
 # GTF Inspector Report
 
-Generated: 2026-06-09T13:14:15.502Z
+Generated: 2026-06-09T13:54:21.678Z
 
 ## Project
 
 - Name: bad-project-demo
 - Framework: Next.js 15.0.0
-- Components: 2
+- Components: 4
 - Pages: 2
 - Routes: 1
 
 ## Overall Score
 
-70 / 100
+75 / 100
 
 ## SEO
 
@@ -74,7 +74,7 @@ Score: 80 / 100
 
 ## Performance
 
-Score: 80 / 100
+Score: 70 / 100
 
 ### Raw img element in Next.js UI
 
@@ -89,8 +89,102 @@ Score: 80 / 100
 - Severity: High
 - Issue: The file is marked use client but no interaction, browser API, or animation usage was detected.
 - Impact: Unneeded client rendering increases JavaScript shipped to users.
+- File: app/components/RuntimePanel.tsx:1
+- Recommendation: Convert this file to a Server Component if no client-only behavior exists.
+
+### Client component may be unnecessary
+
+- Severity: High
+- Issue: The file is marked use client but no interaction, browser API, or animation usage was detected.
+- Impact: Unneeded client rendering increases JavaScript shipped to users.
 - File: app/page.tsx:1
 - Recommendation: Convert this file to a Server Component if no client-only behavior exists.
+
+---
+
+## Memory Health
+
+Score: 80 / 100
+
+### Event listener cleanup missing
+
+- Severity: High
+- Issue: An event listener is registered without a matching removeEventListener call.
+- Impact: Listeners can stay alive after unmount and cause memory leaks or duplicate behavior.
+- File: app/components/MemoryPanel.tsx:3
+- Recommendation: Return a cleanup function that removes every listener registered by the effect.
+
+### Interval cleanup missing
+
+- Severity: High
+- Issue: setInterval is used without clearInterval.
+- Impact: Intervals can continue running after a component is gone, wasting CPU and memory.
+- File: app/components/MemoryPanel.tsx:3
+- Recommendation: Store the interval id and call clearInterval from effect cleanup.
+
+---
+
+## React Diagnostics
+
+Score: 90 / 100
+
+### List item key not detected
+
+- Severity: High
+- Issue: A mapped JSX list appears to render without a key prop.
+- Impact: React reconciliation can become unstable and cause incorrect UI updates.
+- File: app/components/ProductCard.tsx:1
+- Recommendation: Add a stable key from data identity, not the array index when avoidable.
+
+---
+
+## Runtime Insights
+
+Score: 90 / 100
+
+### Unguarded JSON.parse
+
+- Severity: Medium
+- Issue: JSON.parse is called without a nearby try/catch.
+- Impact: Invalid persisted or API data can crash the rendering path.
+- File: app/components/RuntimePanel.tsx:2
+- Recommendation: Wrap parsing in a safe parser and return a typed fallback.
+
+### Fetch error handling not detected
+
+- Severity: Medium
+- Issue: A fetch call appears without explicit error handling.
+- Impact: Network failures can become uncaught runtime errors or blank UI states.
+- File: app/components/RuntimePanel.tsx:2
+- Recommendation: Handle failed responses and network errors with typed fallbacks.
+
+---
+
+## Component Health
+
+Score: 90 / 100
+
+### Data fetching inside component
+
+- Severity: High
+- Issue: A reusable component appears to fetch data directly.
+- Impact: This creates duplicate fetching and weakens page-to-section-to-UI data flow.
+- File: app/components/RuntimePanel.tsx:2
+- Recommendation: Move data loading into the page or lib/api and pass typed props down.
+
+---
+
+## Page Health
+
+Score: 82 / 100
+
+### Page is a client component
+
+- Severity: Critical
+- Issue: A route page is marked with use client.
+- Impact: This weakens server-first rendering and can increase JavaScript shipped to users.
+- File: app/page.tsx:1
+- Recommendation: Keep pages server-only and move interaction into child client components.
 
 ---
 
@@ -106,6 +200,14 @@ Score: 0 / 100
 - File: app/components/AnimatedHero.tsx:1
 - Recommendation: Create AnimatedHeroSkeleton with layout-matched placeholders.
 
+### Missing skeleton for MemoryPanel
+
+- Severity: High
+- Issue: MemoryPanel does not have a matching MemoryPanelSkeleton component.
+- Impact: Async rendering can show blank or shifting UI during loading states.
+- File: app/components/MemoryPanel.tsx:1
+- Recommendation: Create MemoryPanelSkeleton with layout-matched placeholders.
+
 ### Missing skeleton for ProductCard
 
 - Severity: High
@@ -113,6 +215,14 @@ Score: 0 / 100
 - Impact: Async rendering can show blank or shifting UI during loading states.
 - File: app/components/ProductCard.tsx:1
 - Recommendation: Create ProductCardSkeleton with layout-matched placeholders.
+
+### Missing skeleton for RuntimePanel
+
+- Severity: High
+- Issue: RuntimePanel does not have a matching RuntimePanelSkeleton component.
+- Impact: Async rendering can show blank or shifting UI during loading states.
+- File: app/components/RuntimePanel.tsx:1
+- Recommendation: Create RuntimePanelSkeleton with layout-matched placeholders.
 
 ---
 
@@ -142,17 +252,39 @@ Score: 90 / 100
 - File: app/components/AnimatedHero.tsx:4
 - Recommendation: Wrap animations in gsap.context() and return ctx.revert() from the effect.
 
+---
+
+## Engineering Score
+
+Score: 85 / 100
+
+### Build script missing
+
+- Severity: High
+- Issue: package.json does not define a build script.
+- Impact: The project is harder to validate consistently before release.
+- File: Project level
+- Recommendation: Add a deterministic build script and run it in CI.
+
+### Test script missing
+
+- Severity: Medium
+- Issue: package.json does not define a test script.
+- Impact: Regression confidence is lower and adoption is harder to trust.
+- File: Project level
+- Recommendation: Add unit or integration tests for critical frontend behavior.
+
 ## Estimated Impact
 
-- Potential Lighthouse Gain: +23
+- Potential Lighthouse Gain: +30
 - Potential Accessibility Gain: +9
-- Potential Bundle Reduction: -345KB
-- Estimated Developer Fix Time: 139 Minutes
-- Developer Review Time Saved: 89 Minutes
+- Potential Bundle Reduction: -750KB
+- Estimated Developer Fix Time: 273 Minutes
+- Developer Review Time Saved: 173 Minutes
 
 ## Top Priorities
 
 1. Add centralized metadata in app/layout.tsx and route-specific metadata where needed.
-2. Move interactive UI into a child client component and keep the page server-only.
-3. Add route metadata or confirm the inherited layout metadata is sufficient.
-4. Add visible text, aria-label, or an accessible icon label.
+2. Keep pages server-only and move interaction into child client components.
+3. Move interactive UI into a child client component and keep the page server-only.
+4. Add route metadata or confirm the inherited layout metadata is sufficient.

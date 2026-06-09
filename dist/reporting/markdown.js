@@ -1,23 +1,23 @@
 export function renderMarkdownReport(report) {
-    const engines = report.engines.map((engine) => {
-        const findings = engine.findings
-            .map((finding) => {
+    const engines = [];
+    for (const engine of report.engines) {
+        const findings = [];
+        for (const finding of engine.findings) {
             const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
-            return `### ${finding.title}
+            findings.push(`### ${finding.title}
 
 - Severity: ${finding.severity}
 - Issue: ${finding.issue}
 - Impact: ${finding.impact}
 - File: ${location}
-- Recommendation: ${finding.recommendation}`;
-        })
-            .join("\n\n");
-        return `## ${engine.name}
+- Recommendation: ${finding.recommendation}`);
+        }
+        engines.push(`## ${engine.name}
 
 Score: ${engine.score} / 100
 
-${findings || "No issues detected."}`;
-    });
+${findings.join("\n\n") || "No issues detected."}`);
+    }
     return `# GTF Inspector Report
 
 Generated: ${report.generatedAt}

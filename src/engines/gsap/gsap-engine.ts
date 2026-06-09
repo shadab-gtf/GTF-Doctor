@@ -52,9 +52,9 @@ export async function runGsapEngine(context: AuditContext): Promise<EngineReport
 
 function hasRuntimeGsapUsage(content: string): boolean {
   return (
-    /from\s+["']gsap(?:\/[^"']*)?["']/.test(content) ||
-    /import\s+gsap\s+from\s+["']gsap["']/.test(content) ||
-    /\bgsap\.(to|from|fromTo|timeline|context|registerPlugin)\b/.test(content) ||
-    /\bScrollTrigger\.(create|refresh|killAll)\b/.test(content)
+    /(^|\n)\s*import\s+.*from\s+["']gsap(?:\/[^"']*)?["']/.test(content) ||
+    /(^|\n)\s*import\s+gsap\s+from\s+["']gsap["']/.test(content) ||
+    /(^|\n)\s*(?:const\s+\w+\s*=\s*)?gsap\.(to|from|fromTo|timeline|context|registerPlugin)\b/.test(content) ||
+    /(^|\n)\s*(?:const\s+\w+\s*=\s*)?ScrollTrigger\.(create|refresh|killAll)\b/.test(content)
   );
 }

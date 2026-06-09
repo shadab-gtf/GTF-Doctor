@@ -38,8 +38,14 @@ program.command("seo").description("Run SEO scanner").action(async () => run(() 
 program.command("metadata").description("Run metadata scanner").action(async () => run(() => singleEngineCommand(rootDir, "metadata")));
 program.command("accessibility").description("Run accessibility scanner").action(async () => run(() => singleEngineCommand(rootDir, "accessibility")));
 program.command("performance").description("Run performance scanner").action(async () => run(() => singleEngineCommand(rootDir, "performance")));
+program.command("memory").description("Run memory leak and cleanup health scanner").action(async () => run(() => singleEngineCommand(rootDir, "memory")));
+program.command("react").description("Run mature React-specific diagnostics").action(async () => run(() => singleEngineCommand(rootDir, "react")));
+program.command("runtime").description("Run runtime behavior insight scanner").action(async () => run(() => singleEngineCommand(rootDir, "runtime")));
+program.command("component").description("Run component health scanner").action(async () => run(() => singleEngineCommand(rootDir, "component")));
+program.command("page").description("Run page health scanner").action(async () => run(() => singleEngineCommand(rootDir, "page")));
 program.command("nextjs").description("Run Next.js health scanner").action(async () => run(() => singleEngineCommand(rootDir, "nextjs")));
 program.command("gsap").description("Run GSAP scanner").action(async () => run(() => singleEngineCommand(rootDir, "gsap")));
+program.command("engineer").description("Run engineering score scanner").action(async () => run(() => singleEngineCommand(rootDir, "engineer")));
 
 const skeleton = program.command("skeleton").description("Check or generate skeleton components");
 skeleton.command("check").description("Check skeleton coverage").action(async () => run(() => skeletonCheckCommand(rootDir)));
@@ -47,6 +53,7 @@ skeleton.command("generate").description("Generate missing skeleton components")
 
 program.command("report").description("Generate all report formats").action(async () => run(() => auditCommand(rootDir, { report: true })));
 program.command("doctor").description("Audit current git changes and project health").action(async () => run(() => doctorCommand(rootDir)));
+program.command("version").description("Show CLI version").action(() => console.log("1.0.0"));
 program.command("help").description("Show help").action(() => program.help());
 
 async function run(action: () => Promise<void>): Promise<void> {

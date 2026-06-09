@@ -1,5 +1,5 @@
 export type Severity = "Critical" | "High" | "Medium" | "Low";
-export type EngineName = "SEO" | "Metadata" | "Accessibility" | "Performance" | "Skeleton Coverage" | "Next.js" | "GSAP";
+export type EngineName = "SEO" | "Metadata" | "Accessibility" | "Performance" | "Skeleton Coverage" | "Next.js" | "GSAP" | "Memory Health" | "React Diagnostics" | "Runtime Insights" | "Component Health" | "Page Health" | "Engineering Score";
 export interface SourceLocation {
     file: string;
     line: number;

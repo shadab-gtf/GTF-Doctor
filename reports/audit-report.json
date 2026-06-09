@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-09T13:14:17.434Z",
+  "generatedAt": "2026-06-09T13:54:23.133Z",
   "project": {
     "name": "bad-project-demo",
     "framework": "Next.js 15.0.0",
-    "components": 2,
+    "components": 4,
     "pages": 2,
     "routes": 1
   },
-  "overallScore": 70,
+  "overallScore": 75,
   "engines": [
     {
       "name": "SEO",
@@ -97,7 +97,7 @@
     },
     {
       "name": "Performance",
-      "score": 80,
+      "score": 70,
       "findings": [
         {
           "id": "perf-raw-img",
@@ -108,6 +108,18 @@
           "severity": "High",
           "location": {
             "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "perf-unneeded-client",
+          "title": "Client component may be unnecessary",
+          "issue": "The file is marked use client but no interaction, browser API, or animation usage was detected.",
+          "impact": "Unneeded client rendering increases JavaScript shipped to users.",
+          "recommendation": "Convert this file to a Server Component if no client-only behavior exists.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/RuntimePanel.tsx",
             "line": 1
           }
         },
@@ -130,6 +142,143 @@
       ]
     },
     {
+      "name": "Memory Health",
+      "score": 80,
+      "findings": [
+        {
+          "id": "memory-event-listener-cleanup",
+          "title": "Event listener cleanup missing",
+          "issue": "An event listener is registered without a matching removeEventListener call.",
+          "impact": "Listeners can stay alive after unmount and cause memory leaks or duplicate behavior.",
+          "recommendation": "Return a cleanup function that removes every listener registered by the effect.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/MemoryPanel.tsx",
+            "line": 3
+          }
+        },
+        {
+          "id": "memory-interval-cleanup",
+          "title": "Interval cleanup missing",
+          "issue": "setInterval is used without clearInterval.",
+          "impact": "Intervals can continue running after a component is gone, wasting CPU and memory.",
+          "recommendation": "Store the interval id and call clearInterval from effect cleanup.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/MemoryPanel.tsx",
+            "line": 3
+          }
+        }
+      ],
+      "recommendations": [
+        "Clean up subscriptions, timers, observers, and listeners",
+        "Keep effects small and lifecycle-safe"
+      ]
+    },
+    {
+      "name": "React Diagnostics",
+      "score": 90,
+      "findings": [
+        {
+          "id": "react-missing-key",
+          "title": "List item key not detected",
+          "issue": "A mapped JSX list appears to render without a key prop.",
+          "impact": "React reconciliation can become unstable and cause incorrect UI updates.",
+          "recommendation": "Add a stable key from data identity, not the array index when avoidable.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Use stable keys",
+        "Keep effects dependency-safe",
+        "Avoid unsafe HTML and unnecessary memoization"
+      ]
+    },
+    {
+      "name": "Runtime Insights",
+      "score": 90,
+      "findings": [
+        {
+          "id": "runtime-json-parse-unguarded",
+          "title": "Unguarded JSON.parse",
+          "issue": "JSON.parse is called without a nearby try/catch.",
+          "impact": "Invalid persisted or API data can crash the rendering path.",
+          "recommendation": "Wrap parsing in a safe parser and return a typed fallback.",
+          "severity": "Medium",
+          "location": {
+            "file": "app/components/RuntimePanel.tsx",
+            "line": 2
+          }
+        },
+        {
+          "id": "runtime-fetch-error-handling",
+          "title": "Fetch error handling not detected",
+          "issue": "A fetch call appears without explicit error handling.",
+          "impact": "Network failures can become uncaught runtime errors or blank UI states.",
+          "recommendation": "Handle failed responses and network errors with typed fallbacks.",
+          "severity": "Medium",
+          "location": {
+            "file": "app/components/RuntimePanel.tsx",
+            "line": 2
+          }
+        }
+      ],
+      "recommendations": [
+        "Guard browser-only APIs",
+        "Handle parsing and network failures explicitly"
+      ]
+    },
+    {
+      "name": "Component Health",
+      "score": 90,
+      "findings": [
+        {
+          "id": "component-fetching-data",
+          "title": "Data fetching inside component",
+          "issue": "A reusable component appears to fetch data directly.",
+          "impact": "This creates duplicate fetching and weakens page-to-section-to-UI data flow.",
+          "recommendation": "Move data loading into the page or lib/api and pass typed props down.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/RuntimePanel.tsx",
+            "line": 2
+          }
+        }
+      ],
+      "recommendations": [
+        "Keep components small",
+        "Use typed props",
+        "Keep data loading out of presentational UI"
+      ]
+    },
+    {
+      "name": "Page Health",
+      "score": 82,
+      "findings": [
+        {
+          "id": "page-client-boundary",
+          "title": "Page is a client component",
+          "issue": "A route page is marked with use client.",
+          "impact": "This weakens server-first rendering and can increase JavaScript shipped to users.",
+          "recommendation": "Keep pages server-only and move interaction into child client components.",
+          "severity": "Critical",
+          "location": {
+            "file": "app/page.tsx",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Keep pages as server data layers",
+        "Use sections for layout",
+        "Stream async UI with Suspense"
+      ]
+    },
+    {
       "name": "Skeleton Coverage",
       "score": 0,
       "findings": [
@@ -147,6 +296,18 @@
         },
         {
           "id": "skeleton-missing",
+          "title": "Missing skeleton for MemoryPanel",
+          "issue": "MemoryPanel does not have a matching MemoryPanelSkeleton component.",
+          "impact": "Async rendering can show blank or shifting UI during loading states.",
+          "recommendation": "Create MemoryPanelSkeleton with layout-matched placeholders.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/MemoryPanel.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "skeleton-missing",
           "title": "Missing skeleton for ProductCard",
           "issue": "ProductCard does not have a matching ProductCardSkeleton component.",
           "impact": "Async rendering can show blank or shifting UI during loading states.",
@@ -154,6 +315,18 @@
           "severity": "High",
           "location": {
             "file": "app/components/ProductCard.tsx",
+            "line": 1
+          }
+        },
+        {
+          "id": "skeleton-missing",
+          "title": "Missing skeleton for RuntimePanel",
+          "issue": "RuntimePanel does not have a matching RuntimePanelSkeleton component.",
+          "impact": "Async rendering can show blank or shifting UI during loading states.",
+          "recommendation": "Create RuntimePanelSkeleton with layout-matched placeholders.",
+          "severity": "High",
+          "location": {
+            "file": "app/components/RuntimePanel.tsx",
             "line": 1
           }
         }
@@ -206,21 +379,48 @@
         "Keep GSAP isolated to client components",
         "Use gsap.context for route-safe cleanup"
       ]
+    },
+    {
+      "name": "Engineering Score",
+      "score": 85,
+      "findings": [
+        {
+          "id": "engineering-missing-build-script",
+          "title": "Build script missing",
+          "issue": "package.json does not define a build script.",
+          "impact": "The project is harder to validate consistently before release.",
+          "recommendation": "Add a deterministic build script and run it in CI.",
+          "severity": "High"
+        },
+        {
+          "id": "engineering-missing-test-script",
+          "title": "Test script missing",
+          "issue": "package.json does not define a test script.",
+          "impact": "Regression confidence is lower and adoption is harder to trust.",
+          "recommendation": "Add unit or integration tests for critical frontend behavior.",
+          "severity": "Medium"
+        }
+      ],
+      "recommendations": [
+        "Keep build and test commands reliable",
+        "Preserve strict TypeScript",
+        "Remove unfinished markers before launch"
+      ]
     }
   ],
-  "criticalIssues": 2,
-  "warnings": 9,
+  "criticalIssues": 3,
+  "warnings": 20,
   "topPriorities": [
     "Add centralized metadata in app/layout.tsx and route-specific metadata where needed.",
+    "Keep pages server-only and move interaction into child client components.",
     "Move interactive UI into a child client component and keep the page server-only.",
-    "Add route metadata or confirm the inherited layout metadata is sufficient.",
-    "Add visible text, aria-label, or an accessible icon label."
+    "Add route metadata or confirm the inherited layout metadata is sufficient."
   ],
   "impact": {
-    "lighthouseGain": 23,
+    "lighthouseGain": 30,
     "accessibilityGain": 9,
-    "bundleReductionKb": 345,
-    "developerFixMinutes": 139,
-    "reviewTimeSavedMinutes": 89
+    "bundleReductionKb": 750,
+    "developerFixMinutes": 273,
+    "reviewTimeSavedMinutes": 173
   }
 }

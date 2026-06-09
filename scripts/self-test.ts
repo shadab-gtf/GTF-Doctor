@@ -62,6 +62,7 @@ async function main(): Promise<void> {
   if (/examples\/|scripts\/|tests\/|src\//.test(pack.stdout)) {
     throw new Error("npm package contains temporary or source-only validation files.");
   }
+  await fs.rm(path.join(rootDir, ".tmp"), { recursive: true, force: true });
 }
 
 async function ensureBuiltCli(): Promise<void> {
@@ -105,7 +106,9 @@ async function createBadDemo(target: string): Promise<void> {
   await fs.writeFile(path.join(target, "tsconfig.json"), JSON.stringify({ compilerOptions: { jsx: "preserve", strict: true } }, null, 2));
   await fs.writeFile(path.join(target, "app", "layout.tsx"), "export default function Layout({ children }: { children: React.ReactNode }) { return <html><body>{children}</body></html>; }\n");
   await fs.writeFile(path.join(target, "app", "page.tsx"), "'use client';\nimport { ProductCard } from './components/ProductCard';\nexport default function Page() { return <main><h1>Bad Demo</h1><ProductCard /></main>; }\n");
-  await fs.writeFile(path.join(target, "app", "components", "ProductCard.tsx"), "export function ProductCard() { return <article><img src=\"/large.jpg\" /><input /><button></button></article>; }\n");
+  await fs.writeFile(path.join(target, "app", "components", "ProductCard.tsx"), "export function ProductCard() { const items = ['a', 'b']; return <article><img src=\"/large.jpg\" /><input /><button></button>{items.map((item) => <span>{item}</span>)}</article>; }\n");
+  await fs.writeFile(path.join(target, "app", "components", "RuntimePanel.tsx"), "'use client';\nexport function RuntimePanel() { const data = JSON.parse(localStorage.getItem('demo') || '{}'); fetch('/api/demo'); return <pre>{data.title}</pre>; }\n");
+  await fs.writeFile(path.join(target, "app", "components", "MemoryPanel.tsx"), "'use client';\nimport { useEffect } from 'react';\nexport function MemoryPanel() { useEffect(() => { window.addEventListener('resize', () => null); setInterval(() => null, 1000); }, []); return <section>Memory</section>; }\n");
   await fs.writeFile(path.join(target, "app", "components", "AnimatedHero.tsx"), "'use client';\nimport gsap from 'gsap';\nimport { useEffect } from 'react';\nexport function AnimatedHero() { useEffect(() => { gsap.to('.hero', { opacity: 1 }); }, []); return <section className=\"hero\">Hero</section>; }\n");
 }
 

@@ -7,7 +7,13 @@ export type EngineName =
   | "Performance"
   | "Skeleton Coverage"
   | "Next.js"
-  | "GSAP";
+  | "GSAP"
+  | "Memory Health"
+  | "React Diagnostics"
+  | "Runtime Insights"
+  | "Component Health"
+  | "Page Health"
+  | "Engineering Score";
 
 export interface SourceLocation {
   file: string;

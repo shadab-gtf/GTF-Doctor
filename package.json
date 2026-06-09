@@ -14,7 +14,11 @@
     "seo",
     "performance",
     "skeleton",
-    "gsap"
+    "gsap",
+    "memory-leak",
+    "react-diagnostics",
+    "runtime",
+    "launch-readiness"
   ],
   "author": "GTF Technologies",
   "repository": {
