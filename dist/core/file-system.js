@@ -1,7 +1,20 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 const SOURCE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
-const DEFAULT_EXCLUDES = new Set(["node_modules", ".next", "dist", "build", "coverage", ".git", "reports", "examples", "scripts", ".tmp"]);
+const DEFAULT_EXCLUDES = new Set([
+    "node_modules",
+    ".next",
+    "dist",
+    "build",
+    "coverage",
+    ".git",
+    "reports",
+    "examples",
+    "scripts",
+    ".tmp",
+    "react-doctor",
+    "backend",
+]);
 export async function pathExists(target) {
     try {
         await fs.access(target);

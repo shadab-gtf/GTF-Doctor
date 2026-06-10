@@ -1,2 +1,5 @@
 import { AuditContext } from "../types/report.js";
-export declare function createAuditContext(rootDir: string): Promise<AuditContext>;
+export interface AuditContextOptions {
+    changedOnly?: boolean;
+}
+export declare function createAuditContext(rootDir: string, options?: AuditContextOptions): Promise<AuditContext>;

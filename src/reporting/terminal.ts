@@ -25,8 +25,8 @@ export function brandBanner(): string {
       .map((wordmarkLine) => `${chalk.cyan("|")} ${gradient(["#00D1FF", "#7C3AED", "#F97316"])(wordmarkLine.padEnd(width))}${chalk.cyan("|")}`)
       .join("\n"),
     empty,
-    `${chalk.cyan("|")} ${chalk.bold.white("GTF INSPECTOR").padEnd(width - 1)}${chalk.cyan("|")}`,
-    `${chalk.cyan("|")} ${chalk.gray("Frontend Quality Platform").padEnd(width - 1)}${chalk.cyan("|")}`,
+    `${chalk.cyan("|")} ${chalk.bold.white("GTF SCALE").padEnd(width - 1)}${chalk.cyan("|")}`,
+    `${chalk.cyan("|")} ${chalk.gray("Frontend Quality Audit Platform").padEnd(width - 1)}${chalk.cyan("|")}`,
     empty,
     line,
   ].join("\n");
@@ -37,7 +37,7 @@ export function renderTerminalReport(report: AuditReport): string {
   const priorities = report.topPriorities.map((priority, index) => `${index + 1}. ${priority}`).join("\n");
   return `${divider}
 
-GTF INSPECTOR REPORT
+GTF SCALE REPORT
 
 Project:
 ${report.project.name}
@@ -112,12 +112,17 @@ ${findings}`;
 
 function renderFinding(finding: Finding): string {
   const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
+  const codeFrame = finding.codeFrame ? `\n\n  Evidence:\n${indent(finding.codeFrame, "  ")}` : "";
   return `- [${severityColor(finding.severity)(finding.severity)}] ${finding.title}
   Issue: ${finding.issue}
   Impact: ${finding.impact}
   File: ${location}
   Recommendation: ${finding.recommendation}
-  Priority: ${finding.severity}`;
+  Priority: ${finding.severity}${codeFrame}`;
+}
+
+function indent(value: string, prefix: string): string {
+  return value.split("\n").map((line) => `${prefix}${line}`).join("\n");
 }
 
 function scoreColor(score: number): ChalkInstance {

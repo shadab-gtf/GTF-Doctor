@@ -1,7 +1,7 @@
 {
-  "name": "gtf-inspector",
+  "name": "gtf-scale",
   "version": "1.0.0",
-  "description": "Local-first frontend quality auditing, reporting, and skeleton generation CLI.",
+  "description": "GTF Scale - local-first frontend quality auditing, reporting, and skeleton generation CLI.",
   "type": "module",
   "license": "MIT",
   "keywords": [
@@ -16,18 +16,18 @@
     "skeleton",
     "gsap",
     "memory-leak",
-    "react-diagnostics",
+    "gtf-scale",
     "runtime",
     "launch-readiness"
   ],
   "author": "GTF Technologies",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gtftechnologies/gtf-inspector.git"
+    "url": "https://github.com/gtftechnologies/gtf-scale.git"
   },
   "homepage": "https://www.gtftechnologies.com",
   "bugs": {
-    "url": "https://github.com/gtftechnologies/gtf-inspector/issues"
+    "url": "https://github.com/gtftechnologies/gtf-scale/issues"
   },
   "files": [
     "dist",
@@ -44,7 +44,7 @@
     "dev": "tsx src/cli/index.ts",
     "self-test": "tsx scripts/self-test.ts",
     "readme:generate": "tsx scripts/generate-readme.ts",
-    "test": "vitest run",
+    "test": "vitest run tests/scoring.test.ts",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
@@ -56,11 +56,15 @@
     "cli-progress": "^3.12.0",
     "clipboardy": "^4.0.0",
     "commander": "^14.0.2",
+    "deslop-js": "^0.0.21",
     "ejs": "^3.1.10",
     "figlet": "^1.9.4",
     "gradient-string": "^3.0.0",
     "nanospinner": "^1.2.2",
     "ora": "^9.0.0",
+    "oxlint": "^1.66.0",
+    "oxlint-plugin-react-doctor": "^0.5.1",
+    "semver": "^7.6.0",
     "simple-git": "^3.29.0",
     "ts-morph": "^27.0.2"
   },
@@ -69,6 +73,7 @@
     "@types/ejs": "^3.1.5",
     "@types/figlet": "^1.7.0",
     "@types/node": "^24.10.1",
+    "@types/semver": "^7.5.0",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
     "eslint": "^9.39.1",

@@ -12,11 +12,11 @@ const program = new Command();
 const rootDir = process.cwd();
 program
     .name("gtf")
-    .description("GTF Inspector - local-first frontend quality platform")
+    .description("GTF Scale - local-first frontend quality platform")
     .version("1.0.0", "-v, --version", "show version");
 program
     .command("init")
-    .description("Initialize GTF Inspector in the current project")
+    .description("Initialize GTF Scale in the current project")
     .action(async () => run(() => initCommand(rootDir)));
 program
     .command("audit")
@@ -41,7 +41,12 @@ program.command("gsap").description("Run GSAP scanner").action(async () => run((
 program.command("engineer").description("Run engineering score scanner").action(async () => run(() => singleEngineCommand(rootDir, "engineer")));
 const skeleton = program.command("skeleton").description("Check or generate skeleton components");
 skeleton.command("check").description("Check skeleton coverage").action(async () => run(() => skeletonCheckCommand(rootDir)));
-skeleton.command("generate").description("Generate missing skeleton components").action(async () => run(() => skeletonGenerateCommand(rootDir)));
+skeleton
+    .command("generate")
+    .description("Generate an architecture-aware skeleton for one component")
+    .argument("[component]", "component name, for example Card, Navbar, Modal")
+    .option("--all", "generate skeletons for every eligible component")
+    .action(async (component, options) => run(() => skeletonGenerateCommand(rootDir, component, options)));
 program.command("report").description("Generate all report formats").action(async () => run(() => auditCommand(rootDir, { report: true })));
 program.command("doctor").description("Audit current git changes and project health").action(async () => run(() => doctorCommand(rootDir)));
 program.command("version").description("Show CLI version").action(() => console.log("1.0.0"));
@@ -56,7 +61,7 @@ async function run(action) {
     }
     catch (error) {
         const message = error instanceof Error ? error.message : "Unknown error";
-        console.error(chalk.red(`GTF Inspector failed: ${message}`));
+        console.error(chalk.red(`GTF Scale failed: ${message}`));
         process.exitCode = 1;
     }
 }

@@ -2,17 +2,17 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 const rootDir = process.cwd();
-const imageBaseUrl = "https://raw.githubusercontent.com/gtftechnologies/gtf-inspector/main/assets/screenshots";
+const imageBaseUrl = "https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots";
 
-const readme = `# GTF Inspector - Frontend Quality Audit CLI for React and Next.js
+const readme = `# GTF Scale - Frontend Quality Audit CLI for React and Next.js
 
-![GTF Inspector Dashboard](${imageBaseUrl}/audit-report.png)
+![GTF Scale Dashboard](${imageBaseUrl}/audit-report.png)
 
-GTF Inspector is a local-first developer CLI for auditing React, Next.js, TypeScript, Tailwind CSS, GSAP, and Lenis projects. It scans your frontend codebase, finds quality issues, generates a clear project health report, checks memory-leak risk, reviews component and page health, and helps teams reduce manual code review time.
+GTF Scale is a local-first developer CLI for auditing React, Next.js, TypeScript, Tailwind CSS, GSAP, and Lenis projects. It scans your frontend codebase, finds quality issues, generates a clear project health report, checks memory-leak risk, reviews component and page health, and helps teams reduce manual code review time.
 
 It runs entirely offline. No paid APIs. No cloud account. No AI service required.
 
-## Why GTF Inspector
+## Why GTF Scale
 
 Frontend teams repeatedly review the same problems before launch:
 
@@ -29,7 +29,7 @@ Frontend teams repeatedly review the same problems before launch:
 - Weak component and page architecture
 - Reports that are hard to copy, share, or archive
 
-GTF Inspector turns those checks into one command:
+GTF Scale turns those checks into one command:
 
 \`\`\`bash
 gtf audit --report
@@ -57,14 +57,14 @@ gtf audit --report
 Install globally from npm:
 
 \`\`\`bash
-npm install -g gtf-inspector
+npm install -g gtf-scale
 gtf audit
 \`\`\`
 
 Use inside a project without global install:
 
 \`\`\`bash
-npx gtf-inspector audit --report
+npx gtf-scale audit --report
 \`\`\`
 
 For local development:
@@ -189,7 +189,7 @@ Copies the complete terminal report so it can be pasted directly into team tools
 
 ## Project Health Score
 
-GTF Inspector calculates a 0-100 project health score using weighted frontend quality categories:
+GTF Scale calculates a 0-100 project health score using weighted frontend quality categories:
 
 | Category | Weight |
 | --- | ---: |
@@ -218,7 +218,7 @@ Each finding includes:
 
 ## Commands
 
-GTF Inspector currently ships with 25 CLI commands and command variants.
+GTF Scale currently ships with 25 CLI commands and command variants.
 
 | Command | Purpose |
 | --- | --- |
@@ -250,7 +250,7 @@ GTF Inspector currently ships with 25 CLI commands and command variants.
 
 ## Scalable Architecture
 
-GTF Inspector is designed as a modular TypeScript CLI:
+GTF Scale is designed as a modular TypeScript CLI:
 
 \`\`\`text
 src/
@@ -302,7 +302,7 @@ npm pack --dry-run
 
 ## Trust and Detection Accuracy
 
-GTF Inspector is built to become more trustworthy than generic React checkers by combining several layers of validation:
+GTF Scale is built to become more trustworthy than generic React checkers by combining several layers of validation:
 
 - Static source diagnostics for React and Next.js architecture
 - Memory-risk patterns for timers, listeners, observers, and animation cleanup

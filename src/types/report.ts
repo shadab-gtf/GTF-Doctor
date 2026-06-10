@@ -13,7 +13,13 @@ export type EngineName =
   | "Runtime Insights"
   | "Component Health"
   | "Page Health"
-  | "Engineering Score";
+  | "Dependency Graph"
+  | "Engineering Score"
+  | "React Code Quality Linter"
+  | "Dead Code Analysis"
+  | "Supply Chain Security"
+  | "React Server Components Advisory"
+  | "React Native Hardening";
 
 export interface SourceLocation {
   file: string;
@@ -28,6 +34,15 @@ export interface Finding {
   recommendation: string;
   severity: Severity;
   location?: SourceLocation;
+  category?: "Architecture" | "Performance" | "Accessibility" | "SEO" | "Reliability" | "Skeleton" | "Runtime" | "Animation" | "Type Safety" | "Bundle" | "Engineering";
+  confidence?: number;
+  fix?: {
+    summary: string;
+    steps: string[];
+    safeAutoFix: boolean;
+  };
+  docs?: string;
+  codeFrame?: string;
 }
 
 export interface EngineReport {
@@ -69,7 +84,10 @@ export interface AuditContext {
   projectName: string;
   files: ProjectFile[];
   packageJson?: PackageJson | undefined;
+  changedFiles?: string[];
 }
+
+
 
 export interface ProjectFile {
   path: string;
@@ -82,5 +100,7 @@ export interface PackageJson {
   name?: string;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  optionalDependencies?: Record<string, string>;
   scripts?: Record<string, string>;
 }

@@ -30,7 +30,7 @@ export function renderHtmlReport(report) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GTF Inspector Report</title>
+  <title>GTF Scale Report</title>
   <style>
     :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --red:#dc2626; --amber:#d97706; }
     [data-theme="dark"] { --bg:#020617; --surface:#0f172a; --ink:#e5e7eb; --muted:#94a3b8; --line:#1e293b; }
@@ -69,7 +69,7 @@ export function renderHtmlReport(report) {
 <body>
   <header>
     <nav>
-      <b>GTF Inspector</b>
+      <b>GTF Scale</b>
       <div class="actions">
         <input id="search" placeholder="Search issues" oninput="filterRows(this.value)" />
         <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? '' : 'dark'">Theme</button>

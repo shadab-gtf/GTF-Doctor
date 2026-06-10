@@ -133,7 +133,7 @@ async function dashboardPng(fileName: string, title: string, reportPath: string)
     <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#0ea5e9"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
     <rect width="1200" height="760" fill="#f8fafc"/>
     <rect width="1200" height="260" fill="url(#g)"/>
-    <text x="60" y="92" font-family="Arial" font-size="24" fill="#dbeafe">GTF Inspector</text>
+    <text x="60" y="92" font-family="Arial" font-size="24" fill="#dbeafe">GTF Scale</text>
     <text x="60" y="170" font-family="Arial" font-size="64" font-weight="700" fill="white">${escapeXml(title)}</text>
     <text x="60" y="222" font-family="Arial" font-size="28" fill="#e0f2fe">Project Health ${report.overallScore}/100</text>
     <rect x="60" y="310" width="320" height="180" rx="8" fill="white" stroke="#e2e8f0"/>
@@ -169,7 +169,7 @@ async function verifyReadme(): Promise<void> {
       throw new Error(`README does not reference ${file}`);
     }
   }
-  if (!content.includes("npm install -g gtf-inspector") || !content.includes("gtf audit")) {
+  if (!content.includes("npm install -g gtf-scale") || !content.includes("gtf audit")) {
     throw new Error("README installation instructions are incomplete.");
   }
 }

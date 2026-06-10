@@ -1,9 +1,11 @@
 import path from "node:path";
 import { Project } from "ts-morph";
 import { pathExists, writeTextFile } from "../../core/file-system.js";
+import { analyzeSkeletonTarget } from "./analyzer.js";
 export async function generateSkeletons(rootDir, componentPaths) {
     const generated = [];
     const skipped = [];
+    const analyses = [];
     const project = new Project({ tsConfigFilePath: path.join(rootDir, "tsconfig.json"), skipAddingFilesFromTsConfig: true });
     for (const componentPath of componentPaths) {
         const absolutePath = path.isAbsolute(componentPath) ? componentPath : path.join(rootDir, componentPath);
@@ -18,43 +20,50 @@ export async function generateSkeletons(rootDir, componentPaths) {
             continue;
         }
         const source = project.addSourceFileAtPath(absolutePath);
-        const exportName = `${parsed.name}Skeleton`;
-        const classNames = inferSkeletonClassNames(source.getFullText());
-        const content = `export function ${exportName}() {
-  return (
-    <div className="${classNames.container}" aria-hidden="true">
-      <div className="${classNames.media}" />
-      <div className="${classNames.content}">
-        <div className="${classNames.heading}" />
-        <div className="${classNames.line}" />
-        <div className="${classNames.shortLine}" />
-      </div>
-    </div>
-  );
-}
-`;
-        await writeTextFile(target, content);
+        const analysis = analyzeSkeletonTarget(rootDir, {
+            path: absolutePath,
+            relativePath: path.relative(rootDir, absolutePath).replaceAll("\\", "/"),
+            extension: parsed.ext,
+            content: source.getFullText(),
+        });
+        await writeTextFile(target, renderSkeleton(analysis));
+        analyses.push(analysis);
         generated.push(path.relative(rootDir, target).replaceAll("\\", "/"));
     }
     return {
         generated,
         skipped,
+        analyses,
         timeSavedMinutes: generated.length * 16,
     };
 }
-function inferSkeletonClassNames(source) {
-    const hasCard = /card|rounded|shadow|border/i.test(source);
-    const hasImage = /<Image|<img|Avatar/i.test(source);
-    const container = hasCard
-        ? "animate-pulse rounded-lg border border-slate-200 bg-white p-4"
-        : "animate-pulse space-y-4";
+export async function generateSkeletonFromAnalysis(rootDir, analysis) {
+    if (await pathExists(analysis.targetPath)) {
+        return {
+            generated: [],
+            skipped: [path.relative(rootDir, analysis.targetPath).replaceAll("\\", "/")],
+            analyses: [analysis],
+            timeSavedMinutes: 0,
+        };
+    }
+    await writeTextFile(analysis.targetPath, renderSkeleton(analysis));
     return {
-        container,
-        media: hasImage ? "h-48 w-full rounded-md bg-slate-200" : "hidden",
-        content: "space-y-3",
-        heading: "h-6 w-2/3 rounded bg-slate-200",
-        line: "h-4 w-full rounded bg-slate-200",
-        shortLine: "h-4 w-1/2 rounded bg-slate-200",
+        generated: [path.relative(rootDir, analysis.targetPath).replaceAll("\\", "/")],
+        skipped: [],
+        analyses: [analysis],
+        timeSavedMinutes: 16,
     };
+}
+function renderSkeleton(analysis) {
+    const blocks = analysis.blueprint.blocks.flatMap((block) => Array.from({ length: block.repeat ?? 1 }, () => `      <div className="${block.className}" />`));
+    return `export function ${analysis.exportName}() {
+  return (
+    <div className="${analysis.blueprint.containerClass}" aria-hidden="true" role="status">
+${blocks.join("\n")}
+      <span className="sr-only">Loading ${analysis.componentName}</span>
+    </div>
+  );
+}
+`;
 }
 //# sourceMappingURL=generator.js.map

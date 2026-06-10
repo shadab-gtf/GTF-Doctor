@@ -1,4 +1,5 @@
 import { createAuditContext } from "../core/context.js";
+import { attachCodeFrames } from "../core/code-frame.js";
 import { renderTerminalReport } from "../reporting/terminal.js";
 import { buildAuditReport } from "../core/scoring.js";
 import { summarizeProject } from "../core/project-summary.js";
@@ -31,6 +32,6 @@ export async function singleEngineCommand(rootDir, engine) {
         engineer: runEngineeringScoreEngine,
     };
     const engineReport = await runners[engine](context);
-    console.log(renderTerminalReport(buildAuditReport(summarizeProject(context), [engineReport])));
+    console.log(renderTerminalReport(buildAuditReport(summarizeProject(context), attachCodeFrames(context, [engineReport]))));
 }
 //# sourceMappingURL=single-engine.js.map

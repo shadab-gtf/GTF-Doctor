@@ -1,5 +1,40 @@
 export declare const REPORT_DIR = "reports";
 export declare const DEFAULT_CONFIG = "export default {\n  seo: true,\n  accessibility: true,\n  performance: true,\n  memory: true,\n  reactDiagnostics: true,\n  runtimeInsights: true,\n  componentHealth: true,\n  pageHealth: true,\n  engineeringScore: true,\n  gsap: true,\n  skeleton: true,\n  report: true,\n  include: [\"app\", \"pages\", \"src\", \"components\"],\n  exclude: [\"node_modules\", \".next\", \"dist\", \"build\", \"coverage\"],\n};\n";
+export declare const DEFAULT_RESOLVED_CONFIG: {
+    readonly seo: true;
+    readonly accessibility: true;
+    readonly performance: true;
+    readonly memory: true;
+    readonly reactDiagnostics: true;
+    readonly runtimeInsights: true;
+    readonly componentHealth: true;
+    readonly pageHealth: true;
+    readonly engineeringScore: true;
+    readonly nextjs: true;
+    readonly gsap: true;
+    readonly skeleton: true;
+    readonly report: true;
+    readonly linter: true;
+    readonly deadCode: true;
+    readonly supplyChain: true;
+    readonly rscAdvisory: true;
+    readonly reactNative: true;
+    readonly include: readonly ["app", "pages", "src", "components"];
+    readonly exclude: readonly ["node_modules", ".next", "dist", "build", "coverage"];
+    readonly architecture: {
+        readonly serverFirst: true;
+        readonly strictPages: true;
+        readonly requireSuspense: true;
+        readonly requireRouteLoading: true;
+        readonly requireRouteError: true;
+        readonly maxComponentLines: 180;
+    };
+    readonly policy: {
+        readonly minimumScore: 85;
+        readonly failOnCritical: true;
+        readonly failOnHighCount: 4;
+    };
+};
 export declare const SCORE_WEIGHTS: {
     readonly seo: 0.2;
     readonly accessibility: 0.2;
@@ -13,4 +48,9 @@ export declare const SCORE_WEIGHTS: {
     readonly component: 0.1;
     readonly page: 0.1;
     readonly engineering: 0.1;
+    readonly linter: 0.15;
+    readonly deadCode: 0.15;
+    readonly supplyChain: 0.15;
+    readonly rscAdvisory: 0.2;
+    readonly reactNative: 0.1;
 };

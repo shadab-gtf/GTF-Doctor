@@ -36,6 +36,11 @@ export function weightedOverall(engines: EngineReport[]): number {
     [(byName.get("Component Health") ?? 100), SCORE_WEIGHTS.component],
     [(byName.get("Page Health") ?? 100), SCORE_WEIGHTS.page],
     [(byName.get("Engineering Score") ?? 100), SCORE_WEIGHTS.engineering],
+    [(byName.get("React Code Quality Linter") ?? 100), SCORE_WEIGHTS.linter],
+    [(byName.get("Dead Code Analysis") ?? 100), SCORE_WEIGHTS.deadCode],
+    [(byName.get("Supply Chain Security") ?? 100), SCORE_WEIGHTS.supplyChain],
+    [(byName.get("React Server Components Advisory") ?? 100), SCORE_WEIGHTS.rscAdvisory],
+    [(byName.get("React Native Hardening") ?? 100), SCORE_WEIGHTS.reactNative],
   ] as const;
   const totalWeight = weightedScores.reduce((total, item) => total + item[1], 0);
   const total = weightedScores.reduce((sum, item) => sum + item[0] * item[1], 0);
@@ -57,11 +62,7 @@ export function buildAuditReport(project: ProjectSummary, engines: EngineReport[
     }
   }
 
-  const priorities = findings
-    .slice()
-    .sort((left, right) => SEVERITY_RANK[left.severity] - SEVERITY_RANK[right.severity])
-    .slice(0, 4)
-    .map((finding) => finding.recommendation);
+  const priorities = summarizePriorities(findings);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -73,6 +74,38 @@ export function buildAuditReport(project: ProjectSummary, engines: EngineReport[
     topPriorities: priorities,
     impact: estimateImpact(findings.length, stats),
   };
+}
+
+function summarizePriorities(findings: Finding[]): string[] {
+  const grouped = new Map<string, { finding: Finding; count: number; files: Set<string> }>();
+
+  for (const finding of findings) {
+    const key = `${finding.id}:${finding.recommendation}`;
+    const existing = grouped.get(key);
+    const file = finding.location?.file;
+    if (existing) {
+      existing.count += 1;
+      if (file) existing.files.add(file);
+      continue;
+    }
+    grouped.set(key, {
+      finding,
+      count: 1,
+      files: new Set(file ? [file] : []),
+    });
+  }
+
+  return [...grouped.values()]
+    .sort((left, right) => {
+      const severity = SEVERITY_RANK[left.finding.severity] - SEVERITY_RANK[right.finding.severity];
+      return severity !== 0 ? severity : right.count - left.count;
+    })
+    .slice(0, 4)
+    .map((item) => {
+      const examples = [...item.files].slice(0, 2).join(", ");
+      const suffix = item.count > 1 ? ` (${item.count} occurrences${examples ? `, e.g. ${examples}` : ""})` : "";
+      return `${item.finding.recommendation}${suffix}`;
+    });
 }
 
 function estimateImpact(findingCount: number, stats: FindingStats): ImpactEstimate {

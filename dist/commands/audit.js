@@ -1,6 +1,7 @@
 import clipboard from "clipboardy";
 import chalk from "chalk";
 import ora from "ora";
+import { attachCodeFrames } from "../core/code-frame.js";
 import { createAuditContext } from "../core/context.js";
 import { buildAuditReport } from "../core/scoring.js";
 import { summarizeProject } from "../core/project-summary.js";
@@ -8,10 +9,10 @@ import { runAllEngines } from "../engines/index.js";
 import { renderTerminalReport } from "../reporting/terminal.js";
 import { writeAllReports, writeHtmlReport, writeJsonReport, writeMarkdownReport } from "../reporting/writer.js";
 export async function auditCommand(rootDir, options) {
-    const spinner = ora("Loading GTF Inspector engine...").start();
+    const spinner = ora("Loading GTF Scale engine...").start();
     const context = await createAuditContext(rootDir);
     spinner.text = "Scanning React, Next.js, accessibility, performance, GSAP, and skeleton coverage...";
-    const engines = await runAllEngines(context);
+    const engines = attachCodeFrames(context, await runAllEngines(context));
     const report = buildAuditReport(summarizeProject(context), engines);
     spinner.succeed("Audit complete");
     const terminalReport = renderTerminalReport(report);

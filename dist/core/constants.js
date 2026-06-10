@@ -16,6 +16,41 @@ export const DEFAULT_CONFIG = `export default {
   exclude: ["node_modules", ".next", "dist", "build", "coverage"],
 };
 `;
+export const DEFAULT_RESOLVED_CONFIG = {
+    seo: true,
+    accessibility: true,
+    performance: true,
+    memory: true,
+    reactDiagnostics: true,
+    runtimeInsights: true,
+    componentHealth: true,
+    pageHealth: true,
+    engineeringScore: true,
+    nextjs: true,
+    gsap: true,
+    skeleton: true,
+    report: true,
+    linter: true,
+    deadCode: true,
+    supplyChain: true,
+    rscAdvisory: true,
+    reactNative: true,
+    include: ["app", "pages", "src", "components"],
+    exclude: ["node_modules", ".next", "dist", "build", "coverage"],
+    architecture: {
+        serverFirst: true,
+        strictPages: true,
+        requireSuspense: true,
+        requireRouteLoading: true,
+        requireRouteError: true,
+        maxComponentLines: 180,
+    },
+    policy: {
+        minimumScore: 85,
+        failOnCritical: true,
+        failOnHighCount: 4,
+    },
+};
 export const SCORE_WEIGHTS = {
     seo: 0.2,
     accessibility: 0.2,
@@ -29,5 +64,10 @@ export const SCORE_WEIGHTS = {
     component: 0.1,
     page: 0.1,
     engineering: 0.1,
+    linter: 0.15,
+    deadCode: 0.15,
+    supplyChain: 0.15,
+    rscAdvisory: 0.2,
+    reactNative: 0.1,
 };
 //# sourceMappingURL=constants.js.map

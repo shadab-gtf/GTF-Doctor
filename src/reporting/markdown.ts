@@ -7,13 +7,14 @@ export function renderMarkdownReport(report: AuditReport): string {
     const findings: string[] = [];
     for (const finding of engine.findings) {
       const location = finding.location ? `${finding.location.file}:${finding.location.line}` : "Project level";
+      const codeFrame = finding.codeFrame ? `\n\n\`\`\`tsx\n${finding.codeFrame}\n\`\`\`` : "";
       findings.push(`### ${finding.title}
 
 - Severity: ${finding.severity}
 - Issue: ${finding.issue}
 - Impact: ${finding.impact}
 - File: ${location}
-- Recommendation: ${finding.recommendation}`);
+- Recommendation: ${finding.recommendation}${codeFrame}`);
     }
 
     engines.push(`## ${engine.name}
@@ -23,7 +24,7 @@ Score: ${engine.score} / 100
 ${findings.join("\n\n") || "No issues detected."}`);
   }
 
-  return `# GTF Inspector Report
+  return `# GTF Scale Report
 
 Generated: ${report.generatedAt}
 
