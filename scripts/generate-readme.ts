@@ -2,11 +2,19 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 const rootDir = process.cwd();
-const imageBaseUrl = "https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots";
+const images = {
+  audit: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093835/audit_o4q8yj.png",
+  report: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/report_bcsmde.png",
+  doctor: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-doctor_qhpmrt.png",
+  skeletonCheck: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/skeleton-check_tdswkt.png",
+  memory: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-memory_lhzdov.png",
+  init: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-init_hdsedf.png",
+  health: "https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-health_djvguz.png"
+};
 
 const readme = `# GTF Scale - Frontend Quality Audit CLI for React and Next.js
 
-![GTF Scale Dashboard](${imageBaseUrl}/audit-report.png)
+![GTF Scale Dashboard](${images.report})
 
 GTF Scale is a local-first developer CLI for auditing React, Next.js, TypeScript, Tailwind CSS, GSAP, and Lenis projects. It scans your frontend codebase, finds quality issues, generates a clear project health report, checks memory-leak risk, reviews component and page health, and helps teams reduce manual code review time.
 
@@ -103,29 +111,33 @@ reports/audit-report.json
 
 ## Screenshots
 
-### Terminal Audit Report
+### HTML Quality Dashboard
 
-![Terminal Audit](${imageBaseUrl}/terminal-audit.png)
+![HTML Quality Dashboard](${images.report})
 
-### Skeleton Coverage Report
+### Terminal Quality Audit
 
-![Skeleton Coverage](${imageBaseUrl}/terminal-skeleton.png)
+![Terminal Quality Audit](${images.audit})
 
-### SEO Terminal Report
+### GTF Doctor Git-Audit
 
-![SEO Report](${imageBaseUrl}/terminal-seo.png)
+![GTF Doctor Git-Audit](${images.doctor})
 
-### HTML Audit Dashboard
+### Skeleton Coverage Check
 
-![Audit Dashboard](${imageBaseUrl}/audit-report.png)
+![Skeleton Coverage Check](${images.skeletonCheck})
 
-### Skeleton Dashboard
+### Memory Leak Risk Analysis
 
-![Skeleton Dashboard](${imageBaseUrl}/skeleton-report.png)
+![Memory Leak Risk Analysis](${images.memory})
 
-### SEO Dashboard
+### Project Initialization CLI
 
-![SEO Dashboard](${imageBaseUrl}/seo-report.png)
+![Project Initialization CLI](${images.init})
+
+### Frontend Health Diagnostics
+
+![Frontend Health Diagnostics](${images.health})
 
 ## Audit Engines
 

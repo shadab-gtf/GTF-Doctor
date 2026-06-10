@@ -164,8 +164,17 @@ async function verifyScreenshots(): Promise<void> {
 
 async function verifyReadme(): Promise<void> {
   const content = await fs.readFile(path.join(rootDir, "README.md"), "utf8");
-  for (const file of ["audit-report.png", "seo-report.png", "skeleton-report.png", "terminal-audit.png", "terminal-skeleton.png", "terminal-seo.png"]) {
-    if (!content.includes(`assets/screenshots/${file}`)) {
+  const expectedImages = [
+    "audit_o4q8yj.png",
+    "report_bcsmde.png",
+    "gtf-doctor_qhpmrt.png",
+    "skeleton-check_tdswkt.png",
+    "gtf-memory_lhzdov.png",
+    "gtf-init_hdsedf.png",
+    "gtf-health_djvguz.png"
+  ];
+  for (const file of expectedImages) {
+    if (!content.includes(file)) {
       throw new Error(`README does not reference ${file}`);
     }
   }

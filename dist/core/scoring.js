@@ -41,6 +41,10 @@ export function buildAuditReport(project, engines) {
     const findings = [];
     const stats = { critical: 0, high: 0, medium: 0, warnings: 0, accessibility: 0 };
     for (const engine of engines) {
+        // Show only Critical and High (Errors), not Medium and Low (Warnings)
+        engine.findings = engine.findings.filter((finding) => finding.severity === "Critical" || finding.severity === "High");
+        // Recalculate score based on remaining error findings
+        engine.score = scoreFromFindings(engine.findings);
         for (const finding of engine.findings) {
             findings.push(finding);
             if (finding.severity === "Critical")

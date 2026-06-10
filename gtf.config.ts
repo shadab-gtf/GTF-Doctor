@@ -1,0 +1,16 @@
+export default {
+  seo: true,
+  accessibility: true,
+  performance: true,
+  memory: true,
+  reactDiagnostics: true,
+  runtimeInsights: true,
+  componentHealth: true,
+  pageHealth: true,
+  engineeringScore: true,
+  gsap: true,
+  skeleton: true,
+  report: true,
+  include: ["app", "pages", "src", "components"],
+  exclude: ["node_modules", ".next", "dist", "build", "coverage"],
+};

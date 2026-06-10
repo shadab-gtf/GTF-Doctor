@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { readFileSync } from "node:fs";
 import { Command } from "commander";
 import chalk from "chalk";
 import { createSpinner } from "nanospinner";
@@ -11,11 +12,12 @@ import { brandBanner } from "../reporting/terminal.js";
 
 const program = new Command();
 const rootDir = process.cwd();
+const pkg = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8"));
 
 program
   .name("gtf")
   .description("GTF Scale - local-first frontend quality platform")
-  .version("1.0.0", "-v, --version", "show version");
+  .version(pkg.version, "-v, --version", "show version");
 
 program
   .command("init")
@@ -58,7 +60,7 @@ skeleton
 
 program.command("report").description("Generate all report formats").action(async () => run(() => auditCommand(rootDir, { report: true })));
 program.command("doctor").description("Audit current git changes and project health").action(async () => run(() => doctorCommand(rootDir)));
-program.command("version").description("Show CLI version").action(() => console.log("1.0.0"));
+program.command("version").description("Show CLI version").action(() => console.log(pkg.version));
 program.command("help").description("Show help").action(() => program.help());
 
 async function run(action: () => Promise<void>): Promise<void> {

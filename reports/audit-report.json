@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-09T13:54:23.133Z",
+  "generatedAt": "2026-06-10T12:54:32.032Z",
   "project": {
     "name": "bad-project-demo",
     "framework": "Next.js 15.0.0",
@@ -7,7 +7,7 @@
     "pages": 2,
     "routes": 1
   },
-  "overallScore": 75,
+  "overallScore": 87,
   "engines": [
     {
       "name": "SEO",
@@ -41,7 +41,8 @@
           "location": {
             "file": "app/page.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | import { ProductCard } from './components/ProductCard';\n  3 | export default function Page() { return <main><h1>Bad Demo</h1><ProductCard /></main>; }"
         }
       ],
       "recommendations": [
@@ -51,32 +52,8 @@
     },
     {
       "name": "Accessibility",
-      "score": 80,
+      "score": 90,
       "findings": [
-        {
-          "id": "a11y-missing-alt",
-          "title": "Missing image alt text",
-          "issue": "An img element does not include an alt attribute.",
-          "impact": "Screen reader users cannot understand the purpose of the image.",
-          "recommendation": "Add meaningful alt text or alt=\"\" for decorative images.",
-          "severity": "Medium",
-          "location": {
-            "file": "app/components/ProductCard.tsx",
-            "line": 1
-          }
-        },
-        {
-          "id": "a11y-input-label",
-          "title": "Input missing accessible label",
-          "issue": "An input lacks an id, aria-label, or aria-labelledby attribute.",
-          "impact": "Assistive technology may announce the control without useful context.",
-          "recommendation": "Connect the input to a visible label or add an ARIA label.",
-          "severity": "Medium",
-          "location": {
-            "file": "app/components/ProductCard.tsx",
-            "line": 1
-          }
-        },
         {
           "id": "a11y-empty-button",
           "title": "Empty button",
@@ -87,7 +64,8 @@
           "location": {
             "file": "app/components/ProductCard.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | export function ProductCard() { const items = ['a', 'b']; return <article><img src=\"/large.jpg\" /><input /><button></button>{items.map((item) => <span>{item}</span>)}</article>; }\n  2 | "
         }
       ],
       "recommendations": [
@@ -109,7 +87,8 @@
           "location": {
             "file": "app/components/ProductCard.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | export function ProductCard() { const items = ['a', 'b']; return <article><img src=\"/large.jpg\" /><input /><button></button>{items.map((item) => <span>{item}</span>)}</article>; }\n  2 | "
         },
         {
           "id": "perf-unneeded-client",
@@ -121,7 +100,8 @@
           "location": {
             "file": "app/components/RuntimePanel.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | export function RuntimePanel() { const data = JSON.parse(localStorage.getItem('demo') || '{}'); fetch('/api/demo'); return <pre>{data.title}</pre>; }\n  3 | "
         },
         {
           "id": "perf-unneeded-client",
@@ -133,7 +113,8 @@
           "location": {
             "file": "app/page.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | import { ProductCard } from './components/ProductCard';\n  3 | export default function Page() { return <main><h1>Bad Demo</h1><ProductCard /></main>; }"
         }
       ],
       "recommendations": [
@@ -155,7 +136,8 @@
           "location": {
             "file": "app/components/MemoryPanel.tsx",
             "line": 3
-          }
+          },
+          "codeFrame": "  1 | 'use client';\n  2 | import { useEffect } from 'react';\n> 3 | export function MemoryPanel() { useEffect(() => { window.addEventListener('resize', () => null); setInterval(() => null, 1000); }, []); return <section>Memory</section>; }\n  4 | "
         },
         {
           "id": "memory-interval-cleanup",
@@ -167,7 +149,8 @@
           "location": {
             "file": "app/components/MemoryPanel.tsx",
             "line": 3
-          }
+          },
+          "codeFrame": "  1 | 'use client';\n  2 | import { useEffect } from 'react';\n> 3 | export function MemoryPanel() { useEffect(() => { window.addEventListener('resize', () => null); setInterval(() => null, 1000); }, []); return <section>Memory</section>; }\n  4 | "
         }
       ],
       "recommendations": [
@@ -189,7 +172,8 @@
           "location": {
             "file": "app/components/ProductCard.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | export function ProductCard() { const items = ['a', 'b']; return <article><img src=\"/large.jpg\" /><input /><button></button>{items.map((item) => <span>{item}</span>)}</article>; }\n  2 | "
         }
       ],
       "recommendations": [
@@ -200,33 +184,8 @@
     },
     {
       "name": "Runtime Insights",
-      "score": 90,
-      "findings": [
-        {
-          "id": "runtime-json-parse-unguarded",
-          "title": "Unguarded JSON.parse",
-          "issue": "JSON.parse is called without a nearby try/catch.",
-          "impact": "Invalid persisted or API data can crash the rendering path.",
-          "recommendation": "Wrap parsing in a safe parser and return a typed fallback.",
-          "severity": "Medium",
-          "location": {
-            "file": "app/components/RuntimePanel.tsx",
-            "line": 2
-          }
-        },
-        {
-          "id": "runtime-fetch-error-handling",
-          "title": "Fetch error handling not detected",
-          "issue": "A fetch call appears without explicit error handling.",
-          "impact": "Network failures can become uncaught runtime errors or blank UI states.",
-          "recommendation": "Handle failed responses and network errors with typed fallbacks.",
-          "severity": "Medium",
-          "location": {
-            "file": "app/components/RuntimePanel.tsx",
-            "line": 2
-          }
-        }
-      ],
+      "score": 100,
+      "findings": [],
       "recommendations": [
         "Guard browser-only APIs",
         "Handle parsing and network failures explicitly"
@@ -246,7 +205,8 @@
           "location": {
             "file": "app/components/RuntimePanel.tsx",
             "line": 2
-          }
+          },
+          "codeFrame": "  1 | 'use client';\n> 2 | export function RuntimePanel() { const data = JSON.parse(localStorage.getItem('demo') || '{}'); fetch('/api/demo'); return <pre>{data.title}</pre>; }\n  3 | "
         }
       ],
       "recommendations": [
@@ -269,7 +229,8 @@
           "location": {
             "file": "app/page.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | import { ProductCard } from './components/ProductCard';\n  3 | export default function Page() { return <main><h1>Bad Demo</h1><ProductCard /></main>; }"
         }
       ],
       "recommendations": [
@@ -279,8 +240,18 @@
       ]
     },
     {
+      "name": "Dependency Graph",
+      "score": 100,
+      "findings": [],
+      "recommendations": [
+        "Keep heavy dependencies out of initial render paths",
+        "Break import cycles",
+        "Watch high fan-in shared components"
+      ]
+    },
+    {
       "name": "Skeleton Coverage",
-      "score": 0,
+      "score": 60,
       "findings": [
         {
           "id": "skeleton-missing",
@@ -292,7 +263,8 @@
           "location": {
             "file": "app/components/AnimatedHero.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | import gsap from 'gsap';\n  3 | import { useEffect } from 'react';"
         },
         {
           "id": "skeleton-missing",
@@ -304,7 +276,8 @@
           "location": {
             "file": "app/components/MemoryPanel.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | import { useEffect } from 'react';\n  3 | export function MemoryPanel() { useEffect(() => { window.addEventListener('resize', () => null); setInterval(() => null, 1000); }, []); return <section>Memory</section>; }"
         },
         {
           "id": "skeleton-missing",
@@ -316,7 +289,8 @@
           "location": {
             "file": "app/components/ProductCard.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | export function ProductCard() { const items = ['a', 'b']; return <article><img src=\"/large.jpg\" /><input /><button></button>{items.map((item) => <span>{item}</span>)}</article>; }\n  2 | "
         },
         {
           "id": "skeleton-missing",
@@ -328,7 +302,8 @@
           "location": {
             "file": "app/components/RuntimePanel.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | export function RuntimePanel() { const data = JSON.parse(localStorage.getItem('demo') || '{}'); fetch('/api/demo'); return <pre>{data.title}</pre>; }\n  3 | "
         }
       ],
       "recommendations": [
@@ -350,7 +325,8 @@
           "location": {
             "file": "app/page.tsx",
             "line": 1
-          }
+          },
+          "codeFrame": "> 1 | 'use client';\n  2 | import { ProductCard } from './components/ProductCard';\n  3 | export default function Page() { return <main><h1>Bad Demo</h1><ProductCard /></main>; }"
         }
       ],
       "recommendations": [
@@ -372,7 +348,8 @@
           "location": {
             "file": "app/components/AnimatedHero.tsx",
             "line": 4
-          }
+          },
+          "codeFrame": "  2 | import gsap from 'gsap';\n  3 | import { useEffect } from 'react';\n> 4 | export function AnimatedHero() { useEffect(() => { gsap.to('.hero', { opacity: 1 }); }, []); return <section className=\"hero\">Hero</section>; }\n  5 | "
         }
       ],
       "recommendations": [
@@ -382,7 +359,7 @@
     },
     {
       "name": "Engineering Score",
-      "score": 85,
+      "score": 90,
       "findings": [
         {
           "id": "engineering-missing-build-script",
@@ -391,14 +368,6 @@
           "impact": "The project is harder to validate consistently before release.",
           "recommendation": "Add a deterministic build script and run it in CI.",
           "severity": "High"
-        },
-        {
-          "id": "engineering-missing-test-script",
-          "title": "Test script missing",
-          "issue": "package.json does not define a test script.",
-          "impact": "Regression confidence is lower and adoption is harder to trust.",
-          "recommendation": "Add unit or integration tests for critical frontend behavior.",
-          "severity": "Medium"
         }
       ],
       "recommendations": [
@@ -406,21 +375,76 @@
         "Preserve strict TypeScript",
         "Remove unfinished markers before launch"
       ]
+    },
+    {
+      "name": "React Code Quality Linter",
+      "score": 100,
+      "findings": [],
+      "recommendations": [
+        "Ensure Node execution permissions are configured and verify the oxlint package setup."
+      ]
+    },
+    {
+      "name": "Dead Code Analysis",
+      "score": 100,
+      "findings": [],
+      "recommendations": [
+        "Delete the file if it is no longer needed, or import it if it was left unlinked.",
+        "Delete the file if it is no longer needed, or import it if it was left unlinked.",
+        "Delete the file if it is no longer needed, or import it if it was left unlinked.",
+        "Delete the file if it is no longer needed, or import it if it was left unlinked.",
+        "Remove the 'export' keyword from 'AnimatedHero' or delete it if it is no longer used.",
+        "Remove the 'export' keyword from 'MemoryPanel' or delete it if it is no longer used.",
+        "Remove the 'export' keyword from 'RuntimePanel' or delete it if it is no longer used."
+      ]
+    },
+    {
+      "name": "Supply Chain Security",
+      "score": 100,
+      "findings": [],
+      "recommendations": []
+    },
+    {
+      "name": "React Server Components Advisory",
+      "score": 82,
+      "findings": [
+        {
+          "id": "rsc-nextjs-critical-rce",
+          "title": "Critical RSC Remote Code Execution in Next.js",
+          "issue": "next@15.0.0 bundles the React Server Components runtime affected by the critical remote code execution vulnerability (CVE-2025-55182, CVSS 10.0).",
+          "impact": "An unauthenticated attacker can run arbitrary code on your server by sending a crafted payload to any Server Function or Server Action endpoint.",
+          "recommendation": "Upgrade Next.js to 15.5.18 (or newer). Run 'npm install next@15.5.18'. See https://vercel.com/blog/security-release-react-server-components",
+          "severity": "Critical",
+          "location": {
+            "file": "package.json",
+            "line": 1
+          }
+        }
+      ],
+      "recommendations": [
+        "Upgrade Next.js to 15.5.18 (or newer). Run 'npm install next@15.5.18'. See https://vercel.com/blog/security-release-react-server-components"
+      ]
+    },
+    {
+      "name": "React Native Hardening",
+      "score": 100,
+      "findings": [],
+      "recommendations": []
     }
   ],
-  "criticalIssues": 3,
-  "warnings": 20,
+  "criticalIssues": 4,
+  "warnings": 15,
   "topPriorities": [
     "Add centralized metadata in app/layout.tsx and route-specific metadata where needed.",
     "Keep pages server-only and move interaction into child client components.",
     "Move interactive UI into a child client component and keep the page server-only.",
-    "Add route metadata or confirm the inherited layout metadata is sufficient."
+    "Upgrade Next.js to 15.5.18 (or newer). Run 'npm install next@15.5.18'. See https://vercel.com/blog/security-release-react-server-components"
   ],
   "impact": {
     "lighthouseGain": 30,
-    "accessibilityGain": 9,
-    "bundleReductionKb": 750,
-    "developerFixMinutes": 273,
-    "reviewTimeSavedMinutes": 173
+    "accessibilityGain": 3,
+    "bundleReductionKb": 675,
+    "developerFixMinutes": 263,
+    "reviewTimeSavedMinutes": 145
   }
 }

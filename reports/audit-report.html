@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GTF Inspector Report</title>
+  <title>GTF Scale Report</title>
   <style>
     :root { color-scheme: light dark; --bg:#f8fafc; --surface:#ffffff; --ink:#111827; --muted:#64748b; --line:#e2e8f0; --blue:#0ea5e9; --violet:#7c3aed; --red:#dc2626; --amber:#d97706; }
     [data-theme="dark"] { --bg:#020617; --surface:#0f172a; --ink:#e5e7eb; --muted:#94a3b8; --line:#1e293b; }
@@ -42,7 +42,7 @@
 <body>
   <header>
     <nav>
-      <b>GTF Inspector</b>
+      <b>GTF Scale</b>
       <div class="actions">
         <input id="search" placeholder="Search issues" oninput="filterRows(this.value)" />
         <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? '' : 'dark'">Theme</button>
@@ -50,15 +50,15 @@
         <button onclick="navigator.clipboard.writeText(document.documentElement.outerHTML)">Export</button>
       </div>
     </nav>
-    <h1>Project Health 75/100</h1>
-    <p class="subtitle">bad-project-demo | Next.js 15.0.0 | Generated 2026-06-09T13:54:22.410Z</p>
+    <h1>Project Health 87/100</h1>
+    <p class="subtitle">bad-project-demo | Next.js 15.0.0 | Generated 2026-06-10T12:54:30.571Z</p>
   </header>
   <main>
     <section class="grid">
       <div class="metric"><span>Components</span><strong>4</strong></div>
       <div class="metric"><span>Routes</span><strong>1</strong></div>
-      <div class="metric"><span>Critical Issues</span><strong>3</strong></div>
-      <div class="metric"><span>Time Saved</span><strong>173m</strong></div>
+      <div class="metric"><span>Critical Issues</span><strong>4</strong></div>
+      <div class="metric"><span>Time Saved</span><strong>145m</strong></div>
     </section>
     <section class="card">
   <div class="cardHeader">
@@ -97,23 +97,13 @@
 </section><section class="card">
   <div class="cardHeader">
     <h2>Accessibility</h2>
-    <strong>80</strong>
+    <strong>90</strong>
   </div>
-  <div class="progress"><span style="width:80%"></span></div>
+  <div class="progress"><span style="width:90%"></span></div>
   <table>
     <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
     <tbody>
       <tr>
-              <td><span class="pill medium">Medium</span></td>
-              <td><b>Missing image alt text</b><small>Screen reader users cannot understand the purpose of the image.</small></td>
-              <td>app/components/ProductCard.tsx:1</td>
-              <td>Add meaningful alt text or alt=&quot;&quot; for decorative images.</td>
-            </tr><tr>
-              <td><span class="pill medium">Medium</span></td>
-              <td><b>Input missing accessible label</b><small>Assistive technology may announce the control without useful context.</small></td>
-              <td>app/components/ProductCard.tsx:1</td>
-              <td>Connect the input to a visible label or add an ARIA label.</td>
-            </tr><tr>
               <td><span class="pill high">High</span></td>
               <td><b>Empty button</b><small>Keyboard and screen reader users cannot identify the action.</small></td>
               <td>app/components/ProductCard.tsx:1</td>
@@ -190,23 +180,13 @@
 </section><section class="card">
   <div class="cardHeader">
     <h2>Runtime Insights</h2>
-    <strong>90</strong>
+    <strong>100</strong>
   </div>
-  <div class="progress"><span style="width:90%"></span></div>
+  <div class="progress"><span style="width:100%"></span></div>
   <table>
     <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
     <tbody>
-      <tr>
-              <td><span class="pill medium">Medium</span></td>
-              <td><b>Unguarded JSON.parse</b><small>Invalid persisted or API data can crash the rendering path.</small></td>
-              <td>app/components/RuntimePanel.tsx:2</td>
-              <td>Wrap parsing in a safe parser and return a typed fallback.</td>
-            </tr><tr>
-              <td><span class="pill medium">Medium</span></td>
-              <td><b>Fetch error handling not detected</b><small>Network failures can become uncaught runtime errors or blank UI states.</small></td>
-              <td>app/components/RuntimePanel.tsx:2</td>
-              <td>Handle failed responses and network errors with typed fallbacks.</td>
-            </tr>
+      <tr><td colspan="4">No issues detected.</td></tr>
     </tbody>
   </table>
 </section><section class="card">
@@ -245,10 +225,22 @@
   </table>
 </section><section class="card">
   <div class="cardHeader">
-    <h2>Skeleton Coverage</h2>
-    <strong>0</strong>
+    <h2>Dependency Graph</h2>
+    <strong>100</strong>
   </div>
-  <div class="progress"><span style="width:0%"></span></div>
+  <div class="progress"><span style="width:100%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4">No issues detected.</td></tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Skeleton Coverage</h2>
+    <strong>60</strong>
+  </div>
+  <div class="progress"><span style="width:60%"></span></div>
   <table>
     <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
     <tbody>
@@ -312,9 +304,9 @@
 </section><section class="card">
   <div class="cardHeader">
     <h2>Engineering Score</h2>
-    <strong>85</strong>
+    <strong>90</strong>
   </div>
-  <div class="progress"><span style="width:85%"></span></div>
+  <div class="progress"><span style="width:90%"></span></div>
   <table>
     <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
     <tbody>
@@ -323,12 +315,72 @@
               <td><b>Build script missing</b><small>The project is harder to validate consistently before release.</small></td>
               <td>Project level</td>
               <td>Add a deterministic build script and run it in CI.</td>
-            </tr><tr>
-              <td><span class="pill medium">Medium</span></td>
-              <td><b>Test script missing</b><small>Regression confidence is lower and adoption is harder to trust.</small></td>
-              <td>Project level</td>
-              <td>Add unit or integration tests for critical frontend behavior.</td>
             </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>React Code Quality Linter</h2>
+    <strong>100</strong>
+  </div>
+  <div class="progress"><span style="width:100%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4">No issues detected.</td></tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Dead Code Analysis</h2>
+    <strong>100</strong>
+  </div>
+  <div class="progress"><span style="width:100%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4">No issues detected.</td></tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>Supply Chain Security</h2>
+    <strong>100</strong>
+  </div>
+  <div class="progress"><span style="width:100%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4">No issues detected.</td></tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>React Server Components Advisory</h2>
+    <strong>82</strong>
+  </div>
+  <div class="progress"><span style="width:82%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+              <td><span class="pill critical">Critical</span></td>
+              <td><b>Critical RSC Remote Code Execution in Next.js</b><small>An unauthenticated attacker can run arbitrary code on your server by sending a crafted payload to any Server Function or Server Action endpoint.</small></td>
+              <td>package.json:1</td>
+              <td>Upgrade Next.js to 15.5.18 (or newer). Run &#039;npm install next@15.5.18&#039;. See https://vercel.com/blog/security-release-react-server-components</td>
+            </tr>
+    </tbody>
+  </table>
+</section><section class="card">
+  <div class="cardHeader">
+    <h2>React Native Hardening</h2>
+    <strong>100</strong>
+  </div>
+  <div class="progress"><span style="width:100%"></span></div>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>File</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4">No issues detected.</td></tr>
     </tbody>
   </table>
 </section>

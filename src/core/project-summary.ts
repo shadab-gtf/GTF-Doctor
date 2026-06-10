@@ -4,8 +4,16 @@ export function summarizeProject(context: AuditContext): ProjectSummary {
   const dependencies = {
     ...context.packageJson?.dependencies,
     ...context.packageJson?.devDependencies,
+    ...context.packageJson?.peerDependencies,
   };
-  const framework = dependencies.next ? `Next.js ${dependencies.next}` : dependencies.react ? "React" : "Unknown";
+  let framework = "Unknown";
+  if (dependencies.next) {
+    framework = `Next.js ${dependencies.next}`;
+  } else if (dependencies.react) {
+    framework = `React ${dependencies.react}`;
+  } else if (context.files.some((f) => f.relativePath.startsWith("next.config.") || f.relativePath.includes("/next.config."))) {
+    framework = "Next.js";
+  }
   const components = context.files.filter((file) => isComponent(file.relativePath)).length;
   const pages = context.files.filter((file) => /(^|\/)(page|layout)\.(tsx|jsx)$/.test(file.relativePath)).length;
   const routes = context.files.filter((file) => file.relativePath.startsWith("app/") && /page\.(tsx|jsx)$/.test(file.relativePath)).length;

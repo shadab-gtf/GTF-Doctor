@@ -1,6 +1,6 @@
 # GTF Scale - Frontend Quality Audit CLI for React and Next.js
 
-![GTF Scale Dashboard](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/audit-report.png)
+![GTF Scale Dashboard](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/report_bcsmde.png)
 
 GTF Scale is a local-first developer CLI for auditing React, Next.js, TypeScript, Tailwind CSS, GSAP, and Lenis projects. It scans your frontend codebase, finds quality issues, generates a clear project health report, checks memory-leak risk, reviews component and page health, and helps teams reduce manual code review time.
 
@@ -97,29 +97,33 @@ reports/audit-report.json
 
 ## Screenshots
 
-### Terminal Audit Report
+### HTML Quality Dashboard
 
-![Terminal Audit](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/terminal-audit.png)
+![HTML Quality Dashboard](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/report_bcsmde.png)
 
-### Skeleton Coverage Report
+### Terminal Quality Audit
 
-![Skeleton Coverage](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/terminal-skeleton.png)
+![Terminal Quality Audit](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093835/audit_o4q8yj.png)
 
-### SEO Terminal Report
+### GTF Doctor Git-Audit
 
-![SEO Report](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/terminal-seo.png)
+![GTF Doctor Git-Audit](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-doctor_qhpmrt.png)
 
-### HTML Audit Dashboard
+### Skeleton Coverage Check
 
-![Audit Dashboard](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/audit-report.png)
+![Skeleton Coverage Check](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/skeleton-check_tdswkt.png)
 
-### Skeleton Dashboard
+### Memory Leak Risk Analysis
 
-![Skeleton Dashboard](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/skeleton-report.png)
+![Memory Leak Risk Analysis](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-memory_lhzdov.png)
 
-### SEO Dashboard
+### Project Initialization CLI
 
-![SEO Dashboard](https://raw.githubusercontent.com/gtftechnologies/gtf-scale/main/assets/screenshots/seo-report.png)
+![Project Initialization CLI](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-init_hdsedf.png)
+
+### Frontend Health Diagnostics
+
+![Frontend Health Diagnostics](https://res.cloudinary.com/dhyxxqujn/image/upload/q_auto/f_auto/v1781093834/gtf-health_djvguz.png)
 
 ## Audit Engines
 
